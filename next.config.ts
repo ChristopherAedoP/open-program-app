@@ -3,7 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Optimización de performance
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: [
       '@assistant-ui/react',
       '@radix-ui/react-dialog',
