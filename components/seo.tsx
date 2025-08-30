@@ -101,20 +101,28 @@ export function constructMetadata({
 			creator: '@OpenProgramIA',
 		},
 
-		// verification: {
-		// 	google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
-		// },
+		verification: {
+			google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || '',
+		},
 	};
 
 	const structuredData = {
 		'@context': 'https://schema.org',
-		'@type': 'WebSite',
+		'@type': 'WebApplication',
 		name: siteName,
 		url: baseUrl,
+		description,
+		applicationCategory: 'Political Analysis Tool',
+		operatingSystem: 'Web Browser',
 		potentialAction: {
 			'@type': 'SearchAction',
 			target: `${baseUrl}/?q={search_term_string}`,
 			'query-input': 'required name=search_term_string',
+		},
+		about: {
+			'@type': 'Thing',
+			name: 'Elecciones Presidenciales Chile 2025',
+			description: 'Análisis y comparación de programas presidenciales chilenos',
 		},
 	};
 
@@ -156,6 +164,7 @@ export function constructMetadata({
 				structuredData,
 				faqStructuredData,
 			]),
+			'og:logo': `${baseUrl}/logo.png`,
 		},
 	};
 }

@@ -1,0 +1,25 @@
+# robots.txt para Open Program IA
+# Herramienta de análisis de programas presidenciales Chile 2025
+
+User-agent: *
+Allow: /
+
+# Permitir acceso completo a motores de búsqueda principales
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: facebookexternalhit
+Allow: /
+
+# Priorizar contenido principal
+Allow: /about
+Allow: /programs
+
+# Archivo de sitemap
+Sitemap: https://open-program.caedo.cl/sitemap.xml
+
+# Crawl-delay para evitar sobrecarga
+Crawl-delay: 1
