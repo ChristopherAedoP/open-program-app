@@ -87,31 +87,32 @@ const searchPoliticalDocs = tool({
 
 			// Formatear resultados con metadata completa para referencias
 			const searchResult = queryResult.points || queryResult;
-			const documents = searchResult.map((result: SearchResultPoint) => {
+			const documents = searchResult.map((result) => {
+				const typedResult = result as SearchResultPoint;
 				// Extraer nombre del programa desde source_file
-				const sourceFile = result.payload?.source_file || '';
-				const programName = sourceFile.split('/').pop()?.replace('.md', '').replace('Programa_', '') || result.payload?.candidate || 'Programa';
+				const sourceFile = typedResult.payload?.source_file || '';
+				const programName = sourceFile.split('/').pop()?.replace('.md', '').replace('Programa_', '') || typedResult.payload?.candidate || 'Programa';
 				
 				// Extraer sección desde headers o section_hierarchy
-				const headers = result.payload?.headers || {};
+				const headers = typedResult.payload?.headers || {};
 				const sectionTitle = Object.values(headers)[0] || 
-				                   (result.payload?.section_hierarchy && result.payload.section_hierarchy[0]) || 
-				                   result.payload?.topic_category || 'Sección General';
+								   (typedResult.payload?.section_hierarchy && typedResult.payload.section_hierarchy[0]) || 
+								   typedResult.payload?.topic_category || 'Sección General';
 
 				return {
-					content: result.payload?.content || '',
-					candidate: result.payload?.candidate || '',
-					party: result.payload?.party || '',
-					page_number: result.payload?.page_number || 0,
-					topic_category: result.payload?.topic_category || '',
-					proposal_type: result.payload?.proposal_type || '',
-					score: result.score,
+					content: typedResult.payload?.content || '',
+					candidate: typedResult.payload?.candidate || '',
+					party: typedResult.payload?.party || '',
+					page_number: typedResult.payload?.page_number || 0,
+					topic_category: typedResult.payload?.topic_category || '',
+					proposal_type: typedResult.payload?.proposal_type || '',
+					score: typedResult.score,
 					source_file: sourceFile,
 					// Campos adicionales para referencias académicas
 					program_name: programName,
 					section_title: sectionTitle,
-					headers: result.payload?.headers || {},
-					section_hierarchy: result.payload?.section_hierarchy || [],
+					headers: typedResult.payload?.headers || {},
+					section_hierarchy: typedResult.payload?.section_hierarchy || [],
 				};
 			});
 
@@ -222,7 +223,6 @@ ESTILO:
 			},
 			stopWhen: () => false, // No detener automáticamente, dejar que el modelo complete
 			toolChoice: 'auto', // Permitir uso inteligente de herramientas
-			maxTokens: 3500, // Permitir análisis extensos y detallados
 			temperature: 0.2, // Más consistencia para análisis profesional
 			onStepFinish: ({ toolResults }) => {
 				for (const toolResult of toolResults) {

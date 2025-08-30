@@ -1,147 +1,149 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+/** @format */
+
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Updated to use Océano Suave color palette */
-  --background: #ffffff; /* Blanco */
-  --foreground: #6b8cae; /* Acero for text */
-  --card: #f3f2ed; /* Perla for cards */
-  --card-foreground: #6b8cae; /* Acero */
-  --popover: #ffffff; /* Blanco */
-  --popover-foreground: #6b8cae; /* Acero */
-  --primary: #6b8cae; /* Acero as primary */
-  --primary-foreground: #ffffff; /* Blanco */
-  --secondary: #f3f2ed; /* Perla */
-  --secondary-foreground: #6b8cae; /* Acero */
-  --muted: #f3f2ed; /* Perla */
-  --muted-foreground: #b0aba3; /* Arena */
-  --accent: #b0aba3; /* Arena */
-  --accent-foreground: #6b8cae; /* Acero */
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #f3f2ed; /* Perla for borders */
-  --input: #f3f2ed; /* Perla */
-  --ring: #b0aba3; /* Arena */
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: #f3f2ed; /* Perla for sidebar */
-  --sidebar-foreground: #6b8cae; /* Acero */
-  --sidebar-primary: #6b8cae; /* Acero */
-  --sidebar-primary-foreground: #ffffff; /* Blanco */
-  --sidebar-accent: #b0aba3; /* Arena */
-  --sidebar-accent-foreground: #6b8cae; /* Acero */
-  --sidebar-border: #b0aba3; /* Arena */
-  --sidebar-ring: #b0aba3; /* Arena */
-  /* Updated Claude-inspired colors with Océano Suave palette */
-  --claude-orange: #6b8cae; /* Using Acero instead of orange */
-  --claude-sidebar: #f3f2ed; /* Perla */
-  --claude-sidebar-hover: #b0aba3; /* Arena */
+	/* Updated to use Océano Suave color palette */
+	--background: #ffffff; /* Blanco */
+	--foreground: #6b8cae; /* Acero for text */
+	--card: #f3f2ed; /* Perla for cards */
+	--card-foreground: #6b8cae; /* Acero */
+	--popover: #ffffff; /* Blanco */
+	--popover-foreground: #6b8cae; /* Acero */
+	--primary: #6b8cae; /* Acero as primary */
+	--primary-foreground: #ffffff; /* Blanco */
+	--secondary: #f3f2ed; /* Perla */
+	--secondary-foreground: #6b8cae; /* Acero */
+	--muted: #f3f2ed; /* Perla */
+	--muted-foreground: #b0aba3; /* Arena */
+	--accent: #b0aba3; /* Arena */
+	--accent-foreground: #6b8cae; /* Acero */
+	--destructive: oklch(0.577 0.245 27.325);
+	--destructive-foreground: oklch(0.577 0.245 27.325);
+	--border: #f3f2ed; /* Perla for borders */
+	--input: #f3f2ed; /* Perla */
+	--ring: #b0aba3; /* Arena */
+	--chart-1: oklch(0.646 0.222 41.116);
+	--chart-2: oklch(0.6 0.118 184.704);
+	--chart-3: oklch(0.398 0.07 227.392);
+	--chart-4: oklch(0.828 0.189 84.429);
+	--chart-5: oklch(0.769 0.188 70.08);
+	--radius: 0.625rem;
+	--sidebar: #f3f2ed; /* Perla for sidebar */
+	--sidebar-foreground: #6b8cae; /* Acero */
+	--sidebar-primary: #6b8cae; /* Acero */
+	--sidebar-primary-foreground: #ffffff; /* Blanco */
+	--sidebar-accent: #b0aba3; /* Arena */
+	--sidebar-accent-foreground: #6b8cae; /* Acero */
+	--sidebar-border: #b0aba3; /* Arena */
+	--sidebar-ring: #b0aba3; /* Arena */
+	/* Updated Claude-inspired colors with Océano Suave palette */
+	--claude-orange: #6b8cae; /* Using Acero instead of orange */
+	--claude-sidebar: #f3f2ed; /* Perla */
+	--claude-sidebar-hover: #b0aba3; /* Arena */
 }
 
 .dark {
-  /* Dark theme using darker variations of Océano Suave palette */
-  --background: #2a3a4a; /* Darker version of Acero */
-  --foreground: #f3f2ed; /* Perla for text */
-  --card: #3a4a5a; /* Slightly lighter than background */
-  --card-foreground: #f3f2ed; /* Perla */
-  --popover: #2a3a4a; /* Same as background */
-  --popover-foreground: #f3f2ed; /* Perla */
-  --primary: #b0aba3; /* Arena as primary in dark */
-  --primary-foreground: #2a3a4a; /* Dark background */
-  --secondary: #3a4a5a; /* Darker card color */
-  --secondary-foreground: #f3f2ed; /* Perla */
-  --muted: #3a4a5a; /* Darker card color */
-  --muted-foreground: #b0aba3; /* Arena */
-  --accent: #6b8cae; /* Acero */
-  --accent-foreground: #f3f2ed; /* Perla */
-  --destructive: oklch(0.396 0.141 25.723);
-  --destructive-foreground: oklch(0.637 0.237 25.331);
-  --border: #3a4a5a; /* Darker border */
-  --input: #3a4a5a; /* Darker input */
-  --ring: #6b8cae; /* Acero */
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
-  --sidebar: #1a2a3a; /* Even darker for sidebar */
-  --sidebar-foreground: #f3f2ed; /* Perla */
-  --sidebar-primary: #6b8cae; /* Acero */
-  --sidebar-primary-foreground: #f3f2ed; /* Perla */
-  --sidebar-accent: #3a4a5a; /* Darker accent */
-  --sidebar-accent-foreground: #f3f2ed; /* Perla */
-  --sidebar-border: #3a4a5a; /* Darker border */
-  --sidebar-ring: #6b8cae; /* Acero */
-  /* Dark theme Claude colors using Océano Suave */
-  --claude-orange: #6b8cae; /* Acero */
-  --claude-sidebar: #1a2a3a; /* Darkest sidebar */
-  --claude-sidebar-hover: #2a3a4a; /* Hover state */
+	/* Dark theme using darker variations of Océano Suave palette */
+	--background: #2a3a4a; /* Darker version of Acero */
+	--foreground: #f3f2ed; /* Perla for text */
+	--card: #3a4a5a; /* Slightly lighter than background */
+	--card-foreground: #f3f2ed; /* Perla */
+	--popover: #2a3a4a; /* Same as background */
+	--popover-foreground: #f3f2ed; /* Perla */
+	--primary: #b0aba3; /* Arena as primary in dark */
+	--primary-foreground: #2a3a4a; /* Dark background */
+	--secondary: #3a4a5a; /* Darker card color */
+	--secondary-foreground: #f3f2ed; /* Perla */
+	--muted: #3a4a5a; /* Darker card color */
+	--muted-foreground: #b0aba3; /* Arena */
+	--accent: #6b8cae; /* Acero */
+	--accent-foreground: #f3f2ed; /* Perla */
+	--destructive: oklch(0.396 0.141 25.723);
+	--destructive-foreground: oklch(0.637 0.237 25.331);
+	--border: #3a4a5a; /* Darker border */
+	--input: #3a4a5a; /* Darker input */
+	--ring: #6b8cae; /* Acero */
+	--chart-1: oklch(0.488 0.243 264.376);
+	--chart-2: oklch(0.696 0.17 162.48);
+	--chart-3: oklch(0.769 0.188 70.08);
+	--chart-4: oklch(0.627 0.265 303.9);
+	--chart-5: oklch(0.645 0.246 16.439);
+	--sidebar: #1a2a3a; /* Even darker for sidebar */
+	--sidebar-foreground: #f3f2ed; /* Perla */
+	--sidebar-primary: #6b8cae; /* Acero */
+	--sidebar-primary-foreground: #f3f2ed; /* Perla */
+	--sidebar-accent: #3a4a5a; /* Darker accent */
+	--sidebar-accent-foreground: #f3f2ed; /* Perla */
+	--sidebar-border: #3a4a5a; /* Darker border */
+	--sidebar-ring: #6b8cae; /* Acero */
+	/* Dark theme Claude colors using Océano Suave */
+	--claude-orange: #6b8cae; /* Acero */
+	--claude-sidebar: #1a2a3a; /* Darkest sidebar */
+	--claude-sidebar-hover: #2a3a4a; /* Hover state */
 }
 
 @theme inline {
-  /* Updated to use Inter font instead of Geist */
-  --font-sans: var(--font-inter);
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-  /* Added Claude-specific color tokens */
-  --color-claude-orange: var(--claude-orange);
-  --color-claude-sidebar: var(--claude-sidebar);
-  --color-claude-sidebar-hover: var(--claude-sidebar-hover);
+	/* Updated to use Inter font instead of Geist */
+	--font-sans: var(--font-inter);
+	--font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Consolas,
+		'Liberation Mono', Menlo, monospace;
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+	--color-chart-1: var(--chart-1);
+	--color-chart-2: var(--chart-2);
+	--color-chart-3: var(--chart-3);
+	--color-chart-4: var(--chart-4);
+	--color-chart-5: var(--chart-5);
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+	--color-sidebar: var(--sidebar);
+	--color-sidebar-foreground: var(--sidebar-foreground);
+	--color-sidebar-primary: var(--sidebar-primary);
+	--color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+	--color-sidebar-accent: var(--sidebar-accent);
+	--color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+	--color-sidebar-border: var(--sidebar-border);
+	--color-sidebar-ring: var(--sidebar-ring);
+	/* Added Claude-specific color tokens */
+	--color-claude-orange: var(--claude-orange);
+	--color-claude-sidebar: var(--claude-sidebar);
+	--color-claude-sidebar-hover: var(--claude-sidebar-hover);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground font-sans;
-  }
-  
-  /* Ocultar el indicador dot nativo de assistant-ui */
-  .aui-dot,
-  [class*="dot"],
-  [data-state="pending"] {
-    display: none !important;
-  }
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground font-sans;
+	}
+}
+.animate-fadeIn {
+	animation: fadeIn 0.4s ease-out forwards;
+}
+.animate-fadeIn-fast {
+	animation: fadeIn 0.2s ease-out forwards;
 }

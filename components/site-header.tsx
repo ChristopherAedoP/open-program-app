@@ -12,10 +12,8 @@ import { Separator } from '@/components/ui/separator';
 import {
 	Breadcrumb,
 	BreadcrumbItem,
-	BreadcrumbLink,
 	BreadcrumbList,
 	BreadcrumbPage,
-	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 
 export function SiteHeader() {
@@ -31,26 +29,11 @@ export function SiteHeader() {
 			<Separator orientation="vertical" className="mr-2 h-4" />
 			<Breadcrumb>
 				<BreadcrumbList>
-					<BreadcrumbItem className="hidden md:block">
-						<BreadcrumbLink
-							href="https://www.assistant-ui.com/docs/getting-started"
-							target="_blank"
-							rel="noopener noreferrer"
-						>
-							Build Your Own ChatGPT UX
-						</BreadcrumbLink>
-					</BreadcrumbItem>
-					<BreadcrumbSeparator className="hidden md:block" />
 					<BreadcrumbItem>
-						<BreadcrumbPage>Starter Template</BreadcrumbPage>
+						<BreadcrumbPage>Análisis Político a tu Disposición</BreadcrumbPage>
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
-
-			<Separator
-				orientation="vertical"
-				className="mx-2 data-[orientation=vertical]:h-4"
-			/>
 
 			<div className="ml-auto flex items-center gap-2">
 				<Button
