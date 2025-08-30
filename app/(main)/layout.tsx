@@ -17,6 +17,7 @@ export default function MainLayout({
 				<SidebarInset>
 					<SiteHeader />
 					{children}
+					
 				</SidebarInset>
 			</div>
 			

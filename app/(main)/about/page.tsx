@@ -12,9 +12,11 @@ import {
 	Tags,
 	BrainCircuit,
 	CloudUpload,
+	Cpu,
 } from 'lucide-react';
 import { Metadata } from 'next';
 import { Disclaimer } from './disclaimer';
+import { SiteFooter } from '@/components/site-footer';
 
 export const metadata: Metadata = {
 	title: 'El Proceso | Open Program IA',
@@ -49,9 +51,9 @@ function ProcessStep({
 
 export default function HowItWasMadePage() {
 	return (
+		<>
 		<main className="bg-background text-foreground animate-fadeIn">
 			<div className="container mx-auto max-w-5xl py-20 px-4 sm:py-24 animate-fadeIn">
-				{/* === SECCIÓN 1: INTRODUCCIÓN Y MISIÓN === */}
 				<div className="text-center mb-20">
 					<Lightbulb className="mx-auto h-12 w-12 text-primary" />
 					<h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
@@ -83,7 +85,52 @@ export default function HowItWasMadePage() {
 					</CardContent>
 				</Card>
 
-				{/* === SECCIÓN 2: CONSTRUYENDO LA BASE DEL CONOCIMIENTO (NUEVA SECCIÓN) === */}
+				<div className="text-center mb-12">
+					<Cpu className="mx-auto h-12 w-12 text-primary" />
+					<h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
+						¿Cómo Piensa Nuestra IA? Una Analogía
+					</h2>
+					<p className="mt-4 max-w-3xl mx-auto text-lg text-muted-foreground">
+						El término técnico es &quot;Arquitectura RAG&quot;, pero preferimos
+						explicarlo así:
+					</p>
+				</div>
+
+				<Card className="mb-16">
+					<CardHeader>
+						<CardTitle>Un Analista Experto en su Biblioteca</CardTitle>
+					</CardHeader>
+					<CardContent className="space-y-4 text-muted-foreground">
+						<p>
+							Imagina que nuestra IA es un analista político ultrarrápido y con
+							una memoria fotográfica perfecta. Su única misión es responder a
+							tus preguntas de forma clara e imparcial.
+						</p>
+						<p>
+							Para garantizar esa neutralidad, tiene una regla de oro: <strong>no
+							puede responder de memoria</strong>. Por cada pregunta que haces, el
+							analista va a su biblioteca (nuestra base de datos con los
+							programas presidenciales), busca los capítulos y páginas más relevantes en los
+							libros (los PDFs), los lee en una fracción de segundo y, solo
+							entonces, usando únicamente esa información fresca, construye la
+							respuesta perfecta para ti.
+						</p>
+						<p>
+							Como cualquier experto, tiene un límite en la cantidad de páginas
+							que puede leer al mismo tiempo para dar una respuesta coherente.
+							Este &quot;foco de atención&quot; asegura que su análisis siempre
+							esté anclado a los hechos del libro que acaba de &quot;leer&quot;,
+							y no a un vago recuerdo.
+						</p>
+						<p className="font-semibold text-foreground">
+							Este proceso de{' '}
+							<span className="text-primary">buscar para responder</span> es lo
+							que garantiza que cada respuesta sea inteligente y, a la vez, 100%
+							verificable.
+						</p>
+					</CardContent>
+				</Card>
+
 				<div className="text-center mb-12">
 					<DatabaseZap className="mx-auto h-12 w-12 text-primary" />
 					<h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -174,7 +221,6 @@ export default function HowItWasMadePage() {
 					</ProcessStep>
 				</div>
 
-				{/* === SECCIÓN 3: ANATOMÍA DE UNA PREGUNTA (ACTUALIZADA) === */}
 				<div className="mb-16">
 					<div className="text-center mb-12">
 						<Search className="mx-auto h-12 w-12 text-primary" />
@@ -220,7 +266,6 @@ export default function HowItWasMadePage() {
 					</ol>
 				</div>
 
-				{/* === SECCIÓN 4: LAS PIEZAS DEL PUZZLE === */}
 				<div className="text-center mb-12">
 					<PencilRuler className="mx-auto h-12 w-12 text-primary" />
 					<h2 className="mt-4 text-3xl font-bold tracking-tight sm:text-4xl">
@@ -250,5 +295,8 @@ export default function HowItWasMadePage() {
 
 			<Disclaimer />
 		</main>
+		<SiteFooter />
+		
+		</>
 	);
 }
