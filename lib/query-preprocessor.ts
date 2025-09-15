@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import taxonomyData from './taxonomy.json';
 
 /**
@@ -206,36 +207,36 @@ function generateTags(category: string, subcategory: string, matchedKeywords: st
 /**
  * Check if query is asking for general category information
  */
-function isGeneralCategoryQuery(query: string, classification: Omit<ClassificationResult, 'filters'>): boolean {
-  const queryNormalized = normalizeText(query);
-  const categoryNames = Object.keys(taxonomyData.categories);
+// function isGeneralCategoryQuery(query: string, classification: Omit<ClassificationResult, 'filters'>): boolean {
+//   const queryNormalized = normalizeText(query);
+//   const categoryNames = Object.keys(taxonomyData.categories);
   
-  // Check if query contains category name and lacks specific subcategory indicators
-  const containsCategoryName = categoryNames.some(categoryName => 
-    queryNormalized.includes(normalizeText(categoryName))
-  );
+//   // Check if query contains category name and lacks specific subcategory indicators
+//   const containsCategoryName = categoryNames.some(categoryName => 
+//     queryNormalized.includes(normalizeText(categoryName))
+//   );
   
-  // Check for general query patterns (Spanish)
-  const hasGeneralPattern = /\b(propuestas? en|temas? de|sobre|relacionado con|acerca de)\b/i.test(query);
+//   // Check for general query patterns (Spanish)
+//   const hasGeneralPattern = /\b(propuestas? en|temas? de|sobre|relacionado con|acerca de)\b/i.test(query);
   
-  // Check for specific subcategory keywords that would indicate a specific query
-  const [category, subcategory] = classification.taxonomy_path.split(' > ');
-  const subcategoryData = (taxonomyData.categories as Record<string, { subcategories: Record<string, { keywords: string[] }> }>)[category]?.subcategories?.[subcategory];
+//   // Check for specific subcategory keywords that would indicate a specific query
+//   const [category, subcategory] = classification.taxonomy_path.split(' > ');
+//   const subcategoryData = (taxonomyData.categories as Record<string, { subcategories: Record<string, { keywords: string[] }> }>)[category]?.subcategories?.[subcategory];
   
-  let hasSpecificKeywords = false;
-  if (subcategoryData?.keywords) {
-    hasSpecificKeywords = subcategoryData.keywords.some((keyword: string) => 
-      queryNormalized.includes(normalizeText(keyword)) && keyword.length > 4 // Avoid very short matches
-    );
-  }
+//   let hasSpecificKeywords = false;
+//   if (subcategoryData?.keywords) {
+//     hasSpecificKeywords = subcategoryData.keywords.some((keyword: string) => 
+//       queryNormalized.includes(normalizeText(keyword)) && keyword.length > 4 // Avoid very short matches
+//     );
+//   }
   
-  return (containsCategoryName || hasGeneralPattern) && !hasSpecificKeywords;
-}
+//   return (containsCategoryName || hasGeneralPattern) && !hasSpecificKeywords;
+// }
 
 /**
  * Generate intelligent graduated filters based on classification confidence
  */
-function generateFilters(classification: Omit<ClassificationResult, 'filters'> & { query_type: QueryType }, originalQuery: string = ''): QdrantFilter[] {
+function generateFilters(classification: Omit<ClassificationResult, 'filters'> & { query_type: QueryType }): QdrantFilter[] {
   const filters: QdrantFilter[] = [];
   const queryType = classification.query_type || 'specific';
   
@@ -547,7 +548,7 @@ export async function classifyQuery(query: string, providedQueryType?: QueryType
   };
   
   // Generate filters
-  result.filters = generateFilters(result, query);
+  result.filters = generateFilters(result);
   
   // Cache the result
   classificationCache.set(cacheKey, {

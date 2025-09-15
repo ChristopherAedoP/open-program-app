@@ -1,5 +1,5 @@
 import { openai } from '@ai-sdk/openai';
-import { streamText, tool, embed } from 'ai';
+import { streamText, tool, embed, type ModelMessage } from 'ai';
 import { z } from 'zod';
 import { QdrantClient } from '@qdrant/js-client-rest';
 import { classifyQuery, expandQuery, type ClassificationResult, type QueryType } from '../../../lib/query-preprocessor';
@@ -24,7 +24,6 @@ async function generateEmbedding(text: string): Promise<number[]> {
 function calculateEnhancedTagMatch(tags: string[], content: string, query: string): number {
 	const queryWords = query.toLowerCase().split(' ').filter(word => word.length > 2);
 	let totalScore = 0;
-	const maxPossibleScore = queryWords.length;
 	
 	// Tag-based matching (70% weight)
 	if (tags?.length > 0) {
@@ -67,7 +66,6 @@ function getCandidateDiversityScore(candidate: string, allCandidates: string[], 
 	if (!candidate) return 0;
 	
 	const candidateCount = allCandidates.filter(c => c === candidate).length;
-	const totalCandidates = new Set(allCandidates.filter(Boolean)).size;
 	
 	// Smart diversity: promote variety but don't heavily penalize relevant repetition
 	// Give diminishing returns rather than linear penalty
@@ -151,28 +149,28 @@ function rerankWithExistingMetadata(results: any[], originalQuery: string, class
 }
 
 // Define types for our search results
-interface SearchResultPayload {
-	content?: string;
-	candidate?: string;
-	party?: string;
-	page_number?: number;
-	topic_category?: string;
-	proposal_type?: string;
-	source_file?: string;
-	headers?: Record<string, string>;
-	section_hierarchy?: string[];
-	sub_category?: string;
-	taxonomy_path?: string;
-	tags?: string[];
-}
+// interface SearchResultPayload {
+// 	content?: string;
+// 	candidate?: string;
+// 	party?: string;
+// 	page_number?: number;
+// 	topic_category?: string;
+// 	proposal_type?: string;
+// 	source_file?: string;
+// 	headers?: Record<string, string>;
+// 	section_hierarchy?: string[];
+// 	sub_category?: string;
+// 	taxonomy_path?: string;
+// 	tags?: string[];
+// }
 
-interface SearchResultPoint {
-	id: string | number;
-	version: number;
-	score: number;
-	payload?: SearchResultPayload;
-	vector?: number[];
-}
+// interface SearchResultPoint {
+// 	id: string | number;
+// 	version: number;
+// 	score: number;
+// 	payload?: SearchResultPayload;
+// 	vector?: number[];
+// }
 
 // Función para generar resumen estructurado de resultados de búsqueda
 interface DocumentResult {
@@ -321,7 +319,7 @@ async function searchByCandidate(
 		});
 		
 		// Ejecutar búsqueda específica para este candidato
-		const queryResult = await qdrantClient.search(
+		const queryResult: unknown = await qdrantClient.search(
 			process.env.QDRANT_COLLECTION!,
 			{
 				vector: queryEmbedding, // queryEmbedding ya es number[]
@@ -336,13 +334,18 @@ async function searchByCandidate(
 				}
 			}
 		);
-		
+
 		// search() devuelve array directo, no { points: [...] }
-		const points = Array.isArray(queryResult) ? queryResult : (queryResult.points || []);
-		
+		let points: QdrantResult[] = [];
+		if (Array.isArray(queryResult)) {
+			points = queryResult as QdrantResult[];
+		} else if (queryResult && typeof queryResult === 'object' && 'points' in queryResult) {
+			points = (queryResult as { points: QdrantResult[] }).points || [];
+		}
+
 		// Procesar resultados
 		const documents: DocumentResult[] = points
-			.filter(point => point && point.payload) // Validar que exista payload
+			.filter((point: QdrantResult) => point && point.payload) // Validar que exista payload
 			.map((point: QdrantResult) => ({
 			id: String(point.id),
 			content: point.payload?.content || '',
@@ -367,7 +370,7 @@ async function searchByCandidate(
 		if (documents.length === 0 && mustConditions.length > 1) {
 			console.log(`🔄 Fallback para ${candidate}: búsqueda solo por candidato...`);
 			
-			const fallbackResult = await qdrantClient.search(
+			const fallbackResult: unknown = await qdrantClient.search(
 				process.env.QDRANT_COLLECTION!,
 				{
 					vector: queryEmbedding,
@@ -382,10 +385,16 @@ async function searchByCandidate(
 					}
 				}
 			);
-			
-			const fallbackPoints = Array.isArray(fallbackResult) ? fallbackResult : (fallbackResult.points || []);
+
+			let fallbackPoints: QdrantResult[] = [];
+			if (Array.isArray(fallbackResult)) {
+				fallbackPoints = fallbackResult as QdrantResult[];
+			} else if (fallbackResult && typeof fallbackResult === 'object' && 'points' in fallbackResult) {
+				fallbackPoints = (fallbackResult as { points: QdrantResult[] }).points || [];
+			}
+
 			const fallbackDocuments: DocumentResult[] = fallbackPoints
-				.filter(point => point && point.payload)
+				.filter((point: QdrantResult) => point && point.payload)
 				.map((point: QdrantResult) => ({
 					id: String(point.id),
 					content: point.payload?.content || '',
@@ -761,34 +770,53 @@ export async function POST(req: Request) {
 		}
 
 		// Convert UIMessage format to ModelMessage format
-		const modelMessages = messages.map((message: any) => {
+		interface MessagePart {
+			type: string;
+			text: string;
+		}
+		
+		interface UIMessage {
+			role: string;
+			content?: string;
+			parts?: MessagePart[];
+		}
+		
+		const allowedRoles = ['user', 'assistant', 'system', 'tool'] as const;
+		type ModelRole = typeof allowedRoles[number];
+
+		const modelMessages: ModelMessage[] = messages.map((message: UIMessage) => {
+			// Normalize role to allowed values and cast as string literal
+			const normalizedRole: ModelRole = allowedRoles.includes(message.role as ModelRole)
+				? (message.role as ModelRole)
+				: 'user';
+
 			// Handle UIMessage format with parts
 			if (message.parts && Array.isArray(message.parts)) {
 				const textContent = message.parts
-					.filter((part: any) => part.type === 'text')
-					.map((part: any) => part.text)
+					.filter((part: MessagePart) => part.type === 'text')
+					.map((part: MessagePart) => part.text)
 					.join('');
 				
 				return {
-					role: message.role,
+					role: normalizedRole,
 					content: textContent
-				};
+				} as ModelMessage;
 			}
 			
 			// Handle already converted ModelMessage format
 			if (message.content) {
 				return {
-					role: message.role,
+					role: normalizedRole,
 					content: message.content
-				};
+				} as ModelMessage;
 			}
 			
 			// Fallback for unexpected formats
 			console.warn('Unexpected message format:', message);
 			return {
-				role: message.role || 'user',
-				content: message.text || message.content || 'No content'
-			};
+				role: normalizedRole,
+				content: message.content || 'No content'
+			} as ModelMessage;
 		});
 
 		const result = streamText({
