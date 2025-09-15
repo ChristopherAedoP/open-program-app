@@ -1,8 +1,8 @@
 import { openai } from '@ai-sdk/openai';
-import { streamText, tool, embed } from 'ai';
+import { streamText, tool, embed, convertToModelMessages } from 'ai';
 import { z } from 'zod';
 import { QdrantClient } from '@qdrant/js-client-rest';
-import { classifyQuery, expandQuery, type ClassificationResult, type QueryType } from '../../../lib/query-preprocessor';
+import { classifyQuery, expandQuery, type ClassificationResult } from '../../../lib/query-preprocessor';
 
 // Inicializar cliente Qdrant
 const qdrantClient = new QdrantClient({
@@ -24,7 +24,7 @@ async function generateEmbedding(text: string): Promise<number[]> {
 function calculateEnhancedTagMatch(tags: string[], content: string, query: string): number {
 	const queryWords = query.toLowerCase().split(' ').filter(word => word.length > 2);
 	let totalScore = 0;
-	const maxPossibleScore = queryWords.length;
+	let maxPossibleScore = queryWords.length;
 	
 	// Tag-based matching (70% weight)
 	if (tags?.length > 0) {
@@ -112,7 +112,7 @@ function rerankWithExistingMetadata(results: any[], originalQuery: string, class
 	const allCandidates = results.map(r => r.payload?.candidate).filter(Boolean);
 	
 	const rerankedResults = results.map((result, index) => {
-		const payload = result.payload || {}; // Asegurar que payload no sea undefined
+		const payload = result.payload;
 		
 		// Scoring híbrido optimizado usando metadatos existentes
 		const hybridScore = {
@@ -126,7 +126,7 @@ function rerankWithExistingMetadata(results: any[], originalQuery: string, class
 			taxonomyBonus: payload.taxonomy_path === classification.taxonomy_path ? 0.15 : 0,
 			
 			// Bonus por diversidad de candidatos inteligente (10%)
-			diversityBonus: getCandidateDiversityScore(payload.candidate || '', allCandidates, index) * 0.1,
+			diversityBonus: getCandidateDiversityScore(payload.candidate, allCandidates, index) * 0.1,
 			
 			// Bonus por headers relevantes (5%)
 			headerMatch: calculateHeaderRelevance(payload.headers || {}, originalQuery) * 0.05
@@ -264,15 +264,15 @@ function generateSearchSummary(documents: DocumentResult[], classification: Clas
 	};
 }
 
-// Lista completa de 8 candidatos presidenciales 2025 (nombres exactos como aparecen en Qdrant)
+// Lista completa de candidatos presidenciales 2025
 const ALL_CANDIDATES = [
 	'Harold Mayne-Nicholls',
-	'Marco Enríquez-Ominami', // Verificar disponibilidad en DB
+	'Marco Enríquez-Ominami', 
 	'Jeannette Jara',
 	'Johannes Kaiser',
-	'Jose Antonio Kast', // Sin acento en la DB
+	'José Antonio Kast',
 	'Evelyn Matthei',
-	'Eduardo Artes', // Sin acento en la DB
+	'Eduardo Artés',
 	'Franco Parisi'
 ];
 
@@ -289,46 +289,35 @@ async function searchByCandidate(
 	found_information: boolean;
 }> {
 	try {
-		// Construir filtros para Qdrant - estructura correcta
-		const mustConditions: Array<{
-			key: string;
-			match: { value?: string; any?: string[] };
-		}> = [];
+		// Construir filtros específicos para el candidato
+		const must: Array<{ key: string; match: { value?: string; any?: string[] } }> = [];
 		
 		// Filtro obligatorio por candidato
-		mustConditions.push({
-			key: 'candidate',
-			match: { value: candidate }
-		});
+		must.push({ key: 'candidate', match: { value: candidate } });
 		
-		// ESTRATEGIA GRADUAL PARA CANDIDATOS ESPECÍFICOS
-		// Para candidatos específicos, usamos filtros menos restrictivos para maximizar cobertura
+		// Agregar filtros de taxonomía si hay confianza suficiente
+		if (classification.filters.length > 0) {
+			must.push(...(classification.filters as any));
+		}
 		
-		// Usar el topic específico si se proporciona, sino usar la categoría de clasificación
-		const categoryToFilter = (topic && topic.trim() !== '') ? topic : classification.category;
-		
-		if (categoryToFilter && classification.confidence > 0.3) {
-			mustConditions.push({
-				key: 'topic_category',
-				match: { value: categoryToFilter }
-			});
+		// Agregar filtro de topic si se especifica
+		if (topic && topic.trim() !== '') {
+			must.push({ key: 'topic_category', match: { value: topic } });
 		}
 		
 		console.log(`🎯 Búsqueda específica para ${candidate}:`, {
-			filters_count: mustConditions.length,
-			taxonomy_confidence: classification.confidence.toFixed(3),
-			filter_details: mustConditions.map(f => ({ key: f.key, match_type: Object.keys(f.match)[0] }))
+			filters_count: must.length,
+			taxonomy_confidence: classification.confidence.toFixed(3)
 		});
 		
 		// Ejecutar búsqueda específica para este candidato
-		const queryResult = await qdrantClient.search(
+		const queryResult = await qdrantClient.query(
 			process.env.QDRANT_COLLECTION!,
 			{
-				vector: queryEmbedding, // queryEmbedding ya es number[]
-				filter: {
-					must: mustConditions
-				},
+				query: queryEmbedding,
+				filter: { must },
 				limit: 8, // Límite por candidato para controlar el tamaño total
+				with_vector: true,
 				with_payload: true,
 				params: {
 					hnsw_ef: 128,
@@ -337,81 +326,28 @@ async function searchByCandidate(
 			}
 		);
 		
-		// search() devuelve array directo, no { points: [...] }
-		const points = Array.isArray(queryResult) ? queryResult : (queryResult.points || []);
+		const points = queryResult.points || [];
 		
 		// Procesar resultados
-		const documents: DocumentResult[] = points
-			.filter(point => point && point.payload) // Validar que exista payload
-			.map((point: QdrantResult) => ({
+		const documents: DocumentResult[] = points.map((point: QdrantResult) => ({
 			id: String(point.id),
-			content: point.payload?.content || '',
-			candidate: point.payload?.candidate || '',
-			party: point.payload?.party || '',
-			page_number: point.payload?.page_number || 0,
-			topic_category: point.payload?.topic_category || '',
-			proposal_type: point.payload?.proposal_type || '',
-			source_file: point.payload?.source_file || '',
-			program_name: point.payload?.program_name || '',
-			section_title: point.payload?.section_title || '',
-			taxonomy_path: point.payload?.taxonomy_path || '',
-			tags: point.payload?.tags || [],
-			headers: point.payload?.headers || [],
-			section_hierarchy: point.payload?.section_hierarchy || [],
-			score: point.score || 0
+			content: point.payload.content,
+			candidate: point.payload.candidate,
+			party: point.payload.party,
+			page_number: point.payload.page_number,
+			topic_category: point.payload.topic_category,
+			proposal_type: point.payload.proposal_type,
+			source_file: point.payload.source_file,
+			program_name: point.payload.program_name,
+			section_title: point.payload.section_title,
+			taxonomy_path: point.payload.taxonomy_path,
+			tags: point.payload.tags || [],
+			headers: point.payload.headers || [],
+			section_hierarchy: point.payload.section_hierarchy || [],
+			score: point.score
 		}));
 		
 		console.log(`📊 Candidato ${candidate}: ${documents.length} documentos encontrados`);
-		
-		// FALLBACK: Si no encontró documentos con filtros, buscar solo por candidato
-		if (documents.length === 0 && mustConditions.length > 1) {
-			console.log(`🔄 Fallback para ${candidate}: búsqueda solo por candidato...`);
-			
-			const fallbackResult = await qdrantClient.search(
-				process.env.QDRANT_COLLECTION!,
-				{
-					vector: queryEmbedding,
-					filter: {
-						must: [{ key: 'candidate', match: { value: candidate } }] // Solo filtro por candidato
-					},
-					limit: 15, // Más resultados en fallback
-					with_payload: true,
-					params: {
-						hnsw_ef: 128,
-						exact: false
-					}
-				}
-			);
-			
-			const fallbackPoints = Array.isArray(fallbackResult) ? fallbackResult : (fallbackResult.points || []);
-			const fallbackDocuments: DocumentResult[] = fallbackPoints
-				.filter(point => point && point.payload)
-				.map((point: QdrantResult) => ({
-					id: String(point.id),
-					content: point.payload?.content || '',
-					candidate: point.payload?.candidate || '',
-					party: point.payload?.party || '',
-					page_number: point.payload?.page_number || 0,
-					topic_category: point.payload?.topic_category || '',
-					proposal_type: point.payload?.proposal_type || '',
-					source_file: point.payload?.source_file || '',
-					program_name: point.payload?.program_name || '',
-					section_title: point.payload?.section_title || '',
-					taxonomy_path: point.payload?.taxonomy_path || '',
-					tags: point.payload?.tags || [],
-					headers: point.payload?.headers || [],
-					section_hierarchy: point.payload?.section_hierarchy || [],
-					score: point.score || 0
-				}));
-			
-			console.log(`🔄 Fallback ${candidate}: ${fallbackDocuments.length} documentos encontrados`);
-			
-			return {
-				candidate,
-				documents: fallbackDocuments,
-				found_information: fallbackDocuments.length > 0
-			};
-		}
 		
 		return {
 			candidate,
@@ -419,51 +355,8 @@ async function searchByCandidate(
 			found_information: documents.length > 0
 		};
 		
-	} catch (error: unknown) {
+	} catch (error) {
 		console.error(`❌ Error buscando información para ${candidate}:`, error);
-		
-		// Log detallado del error de Qdrant - múltiples propiedades
-		if (error instanceof Error) {
-			// Inspeccionar todas las propiedades posibles del error
-			console.error(`🔍 Error completo para ${candidate}:`, {
-				message: error.message,
-				name: error.name,
-				stack: error.stack?.split('\n').slice(0, 3).join('\n'), // Solo primeras 3 líneas
-			});
-			
-			// Intentar acceder a diferentes propiedades del error
-			const errorObj = error as Error & { 
-				response?: { data: unknown }; 
-				data?: unknown; 
-				body?: unknown;
-				details?: unknown;
-			};
-			
-			if (errorObj.response?.data) {
-				console.error(`📊 Response data para ${candidate}:`, JSON.stringify(errorObj.response.data, null, 2));
-			}
-			
-			if (errorObj.data) {
-				console.error(`📊 Error data para ${candidate}:`, JSON.stringify(errorObj.data, null, 2));
-			}
-			
-			if (errorObj.body) {
-				console.error(`📊 Error body para ${candidate}:`, JSON.stringify(errorObj.body, null, 2));
-			}
-			
-			if (errorObj.details) {
-				console.error(`📊 Error details para ${candidate}:`, JSON.stringify(errorObj.details, null, 2));
-			}
-		}
-		
-		// Log de los filtros reales enviados (no solo el count)
-		console.error(`🔍 Filtros enviados a Qdrant para ${candidate}:`, {
-			candidate,
-			classification_confidence: classification.confidence,
-			classification_filters: classification.filters,
-			topic: topic || 'undefined'
-		});
-		
 		return {
 			candidate,
 			documents: [],
@@ -472,37 +365,26 @@ async function searchByCandidate(
 	}
 }
 
-/**
- * Normalize text for candidate name comparison
- */
-function normalizeText(text: string): string {
-	return text
-		.toLowerCase()
-		.normalize('NFD')
-		.replace(/[\u0300-\u036f]/g, '') // Remove accents
-		.trim();
-}
-
 // Función para mapear nombres/apellidos de usuarios a nombres completos
 function mapCandidateNames(userInputs: string[]): string[] {
 	const mapped: string[] = [];
 	
 	for (const input of userInputs) {
-		const inputNormalized = normalizeText(input);
+		const inputLower = input.toLowerCase().trim();
 		
 		// Buscar coincidencias exactas o parciales
 		const match = ALL_CANDIDATES.find(candidate => {
-			const candidateNormalized = normalizeText(candidate);
-			const parts = candidateNormalized.split(' ');
+			const candidateLower = candidate.toLowerCase();
+			const parts = candidateLower.split(' ');
 			
 			// Coincidencia exacta
-			if (candidateNormalized === inputNormalized) return true;
+			if (candidateLower === inputLower) return true;
 			
 			// Coincidencia por apellido
-			if (parts.some(part => part === inputNormalized)) return true;
+			if (parts.some(part => part === inputLower)) return true;
 			
 			// Coincidencia por nombre
-			if (parts.some(part => part.includes(inputNormalized) && inputNormalized.length > 3)) return true;
+			if (parts.some(part => part.includes(inputLower) && inputLower.length > 3)) return true;
 			
 			return false;
 		});
@@ -533,7 +415,7 @@ const searchPoliticalDocs = tool({
 		});
 
 		// Clasificar query usando taxonomía
-		const classification = await classifyQuery(query, query_type as QueryType);
+		const classification = await classifyQuery(query);
 		console.log('🎯 Query classification:', {
 			taxonomy_path: classification.taxonomy_path,
 			confidence: classification.confidence.toFixed(3),
@@ -561,51 +443,16 @@ const searchPoliticalDocs = tool({
 				found_information: boolean;
 			}> = [];
 
-			// Función auxiliar para ejecutar búsqueda con fallback automático
-			const executeSearchWithFallback = async (
-				candidates: string[], 
-				useClassificationFilters: boolean = true
-			): Promise<Array<{ candidate: string; documents: DocumentResult[]; found_information: boolean; }>> => {
-				const modifiedClassification = useClassificationFilters 
-					? classification 
-					: { ...classification, filters: [], confidence: 0.1 }; // Sin filtros para fallback
-				
-				const searchPromises = candidates.map(candidate => 
-					searchByCandidate(query, queryEmbedding, modifiedClassification, candidate, topic)
-				);
-				
-				return await Promise.all(searchPromises);
-			};
-
 			// Lógica diferenciada según el tipo de consulta
 			if (query_type === 'general') {
 				console.log('🌐 Ejecutando búsqueda GENERAL para todos los candidatos');
 				
-				// Buscar información para TODOS los candidatos con filtros de clasificación
-				candidateResults = await executeSearchWithFallback(ALL_CANDIDATES, true);
+				// Buscar información para TODOS los candidatos
+				const searchPromises = ALL_CANDIDATES.map(candidate => 
+					searchByCandidate(query, queryEmbedding, classification, candidate, topic)
+				);
 				
-				// Verificar cobertura y aplicar fallback si es necesario
-				const candidatesWithInfo = candidateResults.filter(r => r.found_information).length;
-				
-				if (candidatesWithInfo < 3) {
-					console.warn(`⚠️ Cobertura insuficiente: ${candidatesWithInfo}/8 candidatos. Activando fallback sin filtros...`);
-					
-					// Fallback: búsqueda sin filtros de taxonomía para mayor recall
-					const fallbackResults = await executeSearchWithFallback(ALL_CANDIDATES, false);
-					const fallbackCandidatesWithInfo = fallbackResults.filter(r => r.found_information).length;
-					
-					console.log(`🔄 Fallback completado: ${fallbackCandidatesWithInfo}/8 candidatos encontrados`);
-					
-					// Usar resultados de fallback si mejoran la cobertura
-					if (fallbackCandidatesWithInfo > candidatesWithInfo) {
-						candidateResults = fallbackResults;
-						console.log(`✅ Fallback exitoso: mejoró cobertura de ${candidatesWithInfo} a ${fallbackCandidatesWithInfo} candidatos`);
-					} else {
-						console.log(`ℹ️ Fallback no mejoró la cobertura. Manteniendo resultados originales.`);
-					}
-				} else {
-					console.log(`✅ Cobertura adecuada: ${candidatesWithInfo}/8 candidatos con información`);
-				}
+				candidateResults = await Promise.all(searchPromises);
 				
 			} else if (query_type === 'specific' || query_type === 'comparative') {
 				console.log(`🎯 Ejecutando búsqueda ${query_type.toUpperCase()} para candidatos específicos`);
@@ -625,30 +472,16 @@ const searchPoliticalDocs = tool({
 					};
 				}
 				
-				// Buscar para los candidatos especificados con filtros
-				candidateResults = await executeSearchWithFallback(targetCandidates, true);
+				// Buscar solo para los candidatos especificados
+				const searchPromises = targetCandidates.map(candidate => 
+					searchByCandidate(query, queryEmbedding, classification, candidate, topic)
+				);
 				
-				// Verificar si se encontró información para los candidatos solicitados
-				const candidatesWithInfo = candidateResults.filter(r => r.found_information).length;
-				
-				if (candidatesWithInfo === 0) {
-					console.warn(`⚠️ Sin información para candidatos específicos. Activando fallback sin filtros...`);
-					
-					// Fallback para consultas específicas
-					const fallbackResults = await executeSearchWithFallback(targetCandidates, false);
-					const fallbackCandidatesWithInfo = fallbackResults.filter(r => r.found_information).length;
-					
-					console.log(`🔄 Fallback específico completado: ${fallbackCandidatesWithInfo}/${targetCandidates.length} candidatos`);
-					
-					if (fallbackCandidatesWithInfo > 0) {
-						candidateResults = fallbackResults;
-						console.log(`✅ Fallback específico exitoso: encontró información para ${fallbackCandidatesWithInfo} candidatos`);
-					}
-				}
+				candidateResults = await Promise.all(searchPromises);
 			}
 
 			// Agregar y procesar resultados
-			const allDocuments: DocumentResult[] = [];
+			let allDocuments: DocumentResult[] = [];
 			const candidatesWithInfo: string[] = [];
 			const candidatesWithoutInfo: string[] = [];
 
@@ -669,10 +502,10 @@ const searchPoliticalDocs = tool({
 			});
 
 			// Aplicar reranking híbrido a todos los documentos
-			const rerankedResults = rerankWithExistingMetadata(
+			const rerankedResults = hybridReranking(
 				allDocuments,
 				query,
-				classification
+				classification.matched_keywords
 			);
 
 			// Aplicar límite final
@@ -718,9 +551,7 @@ const searchPoliticalDocs = tool({
 
 			return result;
 		} catch (error: unknown) {
-				console.error('🚨 Error en searchPoliticalDocs:', error);
-				console.error('🚨 Error tipo:', typeof error);
-				console.error('🚨 Error stack:', error instanceof Error ? error.stack : 'No stack');
+				console.error('Error searching Qdrant:', error);
 				// Log the full error response if available
 				if (error instanceof Error && 'data' in error) {
 					console.error('Qdrant Error Data:', JSON.stringify((error as Error & { data: unknown }).data, null, 2));
@@ -735,6 +566,128 @@ const searchPoliticalDocs = tool({
 		}
 	},
 });
+
+export async function POST(req: Request) {
+	try {
+		const body = await req.json();
+		const messages = Array.isArray(body.messages) ? body.messages : [];
+		
+		console.log(
+			'🚀 Chat API - Starting request with messages:',
+					program_name: programName,
+					section_title: sectionTitle,
+					headers: typedResult.payload?.headers || {},
+					section_hierarchy: typedResult.payload?.section_hierarchy || [],
+					// Campos de taxonomía enriquecida
+					sub_category: typedResult.payload?.sub_category || '',
+					taxonomy_path: typedResult.payload?.taxonomy_path || '',
+					tags: typedResult.payload?.tags || [],
+					// Metadatos de clasificación para contexto
+					query_classification: {
+						matched_taxonomy: classification.taxonomy_path,
+						confidence: classification.confidence,
+						matched_keywords: classification.matched_keywords
+					}
+				};
+			});
+
+			console.log('📝 Documentos optimizados:', {
+				total: documents.length,
+				hasContent: documents.filter((d) => d.content.length > 0).length,
+				withTaxonomyPath: documents.filter((d) => d.taxonomy_path).length,
+				avgVectorScore: documents.length > 0
+					? (documents.reduce((sum, d) => sum + (d.score || 0), 0) / documents.length).toFixed(3)
+					: 'N/A',
+				avgFinalScore: documents.length > 0
+					? (documents.reduce((sum, d) => sum + (d.score || 0), 0) / documents.length).toFixed(3)
+					: 'N/A',
+				classification_match: documents.filter((d) => 
+					d.taxonomy_path === classification.taxonomy_path
+				).length,
+				unique_candidates: Array.from(new Set(documents.map(d => d.candidate))).length,
+				reranking_applied: false,
+				query_expanded: expandedQuery !== query
+			});
+
+			// Log contenido de los primeros documentos para debug
+			if (documents.length > 0) {
+				console.log('📄 Primer documento:', {
+					candidate: documents[0].candidate,
+					taxonomy_path: documents[0].taxonomy_path,
+					sub_category: documents[0].sub_category,
+					content_preview: documents[0].content.substring(0, 200) + '...',
+					score: documents[0].score,
+					tags: documents[0].tags?.slice(0, 3) || []
+				});
+			}
+
+			if (documents.length === 0) {
+				console.log(`✅ searchPoliticalDocs - No se encontraron documentos para la consulta: "${query}" (clasificación: ${classification.taxonomy_path})`);
+				return {
+					message: `No se encontraron documentos específicos sobre "${query}" en la base de datos de programas políticos.`,
+					query,
+					classification: {
+						taxonomy_path: classification.taxonomy_path,
+						confidence: classification.confidence,
+						matched_keywords: classification.matched_keywords
+					},
+					total_results: 0,
+					documents: []
+				};
+			}
+
+			const result = {
+				documents: documents,
+				query,
+				classification: {
+					taxonomy_path: classification.taxonomy_path,
+					confidence: classification.confidence,
+					matched_keywords: classification.matched_keywords,
+					suggested_tags: classification.suggested_tags
+				},
+				total_results: documents.length,
+				// Datos agregados para análisis estructurado
+				summary: generateSearchSummary(documents, classification)
+			};
+
+			console.log('✅ searchPoliticalDocs - Resultado OPTIMIZADO:', {
+				total_documents: documents.length,
+				taxonomy_path: classification.taxonomy_path,
+				confidence: classification.confidence.toFixed(3),
+				taxonomy_matches: documents.filter(d => d.taxonomy_path === classification.taxonomy_path).length,
+				unique_candidates: Array.from(new Set(documents.map(d => d.candidate))).length,
+				optimizations_applied: {
+					query_expansion: expandedQuery !== query,
+					oversampling_used: '30→15',
+					hnsw_ef_optimized: 128,
+					hybrid_reranking: true,
+					adaptive_filters: classification.filters.length > 0
+				},
+				performance_indicators: {
+					avg_vector_score: documents.length > 0 ? (documents.reduce((sum, d) => sum + (d.score || 0), 0) / documents.length).toFixed(3) : '0',
+					avg_final_score: documents.length > 0 ? (documents.reduce((sum, d) => sum + (d.score || 0), 0) / documents.length).toFixed(3) : '0',
+					score_improvement: '0.000'
+				}
+			});
+			
+			return result;
+		} catch (error: unknown) {
+			console.error('Error searching Qdrant:', error);
+			// Log the full error response if available
+			if (error instanceof Error && 'data' in error) {
+				console.error('Qdrant Error Data:', JSON.stringify((error as Error & { data: unknown }).data, null, 2));
+			}
+
+			return {
+				error: 'Error al buscar en la base de datos política',
+				documents: [],
+				query,
+				total_results: 0,
+			};
+		}
+	},
+});
+
 export async function POST(req: Request) {
 	try {
 		const body = await req.json();
@@ -760,36 +713,8 @@ export async function POST(req: Request) {
 			throw new Error('Invalid messages format');
 		}
 
-		// Convert UIMessage format to ModelMessage format
-		const modelMessages = messages.map((message: any) => {
-			// Handle UIMessage format with parts
-			if (message.parts && Array.isArray(message.parts)) {
-				const textContent = message.parts
-					.filter((part: any) => part.type === 'text')
-					.map((part: any) => part.text)
-					.join('');
-				
-				return {
-					role: message.role,
-					content: textContent
-				};
-			}
-			
-			// Handle already converted ModelMessage format
-			if (message.content) {
-				return {
-					role: message.role,
-					content: message.content
-				};
-			}
-			
-			// Fallback for unexpected formats
-			console.warn('Unexpected message format:', message);
-			return {
-				role: message.role || 'user',
-				content: message.text || message.content || 'No content'
-			};
-		});
+		// Convert UIMessages to ModelMessages format
+		const modelMessages = convertToModelMessages(messages);
 
 		const result = streamText({
 			model: openai('gpt-4o-mini'),
@@ -815,8 +740,6 @@ Usa la herramienta \`searchPoliticalDocs\` de la siguiente manera:
 **Paso 3: Estructurar la Respuesta**
 - **Para Consultas Generales y Comparativas:** Organiza la respuesta con encabezados claros para cada candidato del que encuentres información.
 - **Para Consultas Específicas:** Responde de forma directa y enfocada en el candidato solicitado.
-- **Candidatos sin información:** Si no encuentras información para algún candidato mencionado,indica explicitamente que "No se encontró informacion para [Nombre del Candidato] sobre este tema
-"
 
 # FORMATO DE CITAS (OBLIGATORIO Y ESTRICTO)
 
@@ -840,10 +763,7 @@ Cada dato o afirmación que extraigas de un documento DEBE ser citado al final d
 - Evaluación de viabilidad política, técnica y presupuestaria
 - Análisis balanceado que reconoce complejidades del sistema político chileno
 
-Los candidatos son: Harold Mayne-Nicholls, Marco Enríquez-Ominami, Jeannette Jara, Johannes Kaiser, José Antonio Kast, Evelyn Matthei, Eduardo Artés, Franco Parisi
-
-
-`,
+Los candidatos son: Harold Mayne-Nicholls, Marco Enríquez-Ominami, Jeannette Jara, Johannes Kaiser, José Antonio Kast, Evelyn Matthei, Eduardo Artés, Franco Parisi`,
 			messages: modelMessages,
 			tools: {
 				searchPoliticalDocs,

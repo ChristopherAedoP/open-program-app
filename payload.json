@@ -1,0 +1,33 @@
+{
+   "source_file":"Programa_Franco_Parisi.md",
+   "chunk_id":"Programa_Franco_Parisi_420_9d8ce572",
+   "chunk_index":420,
+   "candidate":"Franco Parisi",
+   "party":"Partido de la Gente",
+   "page_number":71,
+   "topic_category":"Economía",
+   "proposal_type":"meta_cuantitativa",
+   "sub_category":"Inflación",
+   "taxonomy_path":"Economía > Inflación",
+   "tags":[
+      "inflacion",
+      "economia",
+      "canasta basica"
+   ],
+   "content":"El impuesto al valor agregado (IVA) del 19 % aplicado a alimentos y artículos esenciales afecta de manera desproporcionada a los hogares de menores ingresos, que destinan más del 30 % de sus recursos a la compra de estos bienes. Según datos del Ministerio de Desarrollo Social y la Encuesta de Presupuestos Familiares, el gasto en alimentos representa el principal componente del presupuesto en los primeros deciles de ingreso, lo que convierte al IVA en un factor regresivo que agrava la inseguridad",
+   "content_preview":"El impuesto al valor agregado (IVA) del 19 % aplicado a alimentos y artículos esenciales afecta de m...",
+   "has_page_number":true,
+   "embedding_metadata":{
+      "language":"es",
+      "model":"text-embedding-3-small",
+      "dimensions":1536,
+      "generated_date":"2025-09-02"
+   },
+   "headers":{
+      "Header 2":"9.2. Sí a la devolución del IVA de la canasta básica."
+   },
+   "section_hierarchy":[
+      "9.2. Sí a la devolución del IVA de la canasta básica."
+   ],
+   "section_depth":1
+}

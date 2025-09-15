@@ -1,0 +1,443 @@
+{
+  "version": "1.0",
+  "description": "Taxonomía jerárquica para clasificación de programas políticos chilenos 2025",
+  "last_updated": "2025-01-01",
+  "categories": {
+    "Pensiones": {
+      "description": "Sistema previsional, AFP, pensión básica universal",
+      "subcategories": {
+        "AFP": {
+          "keywords": ["afp", "administradora de fondos", "fondos de pensiones", "cotización", "cuenta individual", "capitalización", "jubilación", "pensión", "previsional", "sistema de pensiones", "reformar sistema pensiones", "reformas al sistema previsional", "pensiones afp", "sistema afp", "retiro programado", "multifondos", "comisiones afp", "rentabilidad fondos", "riesgo pensión", "pensión mínima"],
+          "description": "Sistema de AFP y administración privada"
+        },
+        "Pensión Básica Universal": {
+          "keywords": ["pensión básica", "universal", "pilar solidario", "pensión mínima", "garantía estatal", "pensiones universal", "pensiones básica", "aporte solidario", "pensiones garantizadas"],
+          "description": "Pensión básica universal y pilares solidarios"
+        },
+        "Sistema de Reparto": {
+          "keywords": ["reparto", "sistema público", "solidario", "distribución", "generacional", "pensiones reparto", "sistema público pensiones", "solidaridad intergeneracional", "cotización colectiva"],
+          "description": "Sistema de reparto y solidaridad intergeneracional"
+        },
+        "Financiamiento Previsional": {
+          "keywords": ["financiamiento", "cotización", "aporte", "presupuesto previsional", "recursos", "pensiones financiamiento", "fondos previsionales", "aportes patronales", "cotización empleador"],
+          "description": "Financiamiento del sistema previsional"
+        },
+        "Adulto Mayor": {
+          "keywords": ["adulto mayor", "tercera edad", "dependencia", "cuidado", "pensiones adulto mayor", "beneficios tercera edad", "subsidio adulto mayor", "servicios tercera edad"],
+          "description": "Beneficios y servicios para adultos mayores"
+        }
+      }
+    },
+    "Salud": {
+      "description": "Sistema de salud público y privado, atención médica",
+      "subcategories": {
+        "Fonasa": {
+          "keywords": ["fonasa", "seguro público", "sistema público", "atención primaria", "hospital público", "salud fonasa", "salud pública", "sistema público salud", "seguro público salud", "salud gratuita"],
+          "description": "Fondo Nacional de Salud"
+        },
+        "Listas de Espera": {
+          "keywords": ["lista de espera", "cirugía", "operación", "especialista", "demora atención", "atención de salud", "servicios de salud", "tratamiento", "consultas", "salud listas espera", "demora médica", "espera hospitalaria", "meses esperando", "años sin atención", "no me atienden", "cuando me tocará", "urgencia que no es urgencia"],
+          "description": "Reducción de listas de espera y tiempos de atención"
+        },
+        "Atención Primaria": {
+          "keywords": ["consultorio", "cesfam", "atención primaria", "médico general", "prevención", "salud primaria", "centros de salud", "posta", "salud familiar", "medicina preventiva"],
+          "description": "Fortalecimiento de la atención primaria"
+        },
+        "Medicamentos": {
+          "keywords": ["medicamento", "fármaco", "auge", "ges", "acceso medicamentos", "salud medicamentos", "remedios", "tratamientos", "farmacias populares", "medicamentos gratuitos"],
+          "description": "Acceso a medicamentos y tratamientos"
+        },
+        "Isapres": {
+          "keywords": ["isapre", "seguro privado", "plan de salud", "cotización salud", "preexistencias", "salud isapre", "salud privada", "planes salud"],
+          "description": "Instituciones de Salud Previsional privadas"
+        },
+        "Salud Mental": {
+          "keywords": ["salud mental", "psicológico", "psiquiátrico", "depresión", "ansiedad", "suicidio", "terapia", "psicólogo", "psiquiatra", "bienestar mental"],
+          "description": "Atención y servicios de salud mental"
+        },
+        "Infraestructura Hospitalaria": {
+          "keywords": ["hospital", "infraestructura hospitalaria", "construcción hospitales", "equipamiento médico", "centros médicos", "salud infraestructura", "hospitales regionales"],
+          "description": "Construcción y mejoramiento de infraestructura de salud"
+        },
+        "Telemedicina": {
+          "keywords": ["telemedicina", "consultas online", "medicina remota", "salud digital", "atención virtual", "telediagnóstico", "e-salud", "consultas a distancia"],
+          "description": "Desarrollo de telemedicina y salud digital"
+        },
+        "Crisis Sanitaria": {
+          "keywords": ["crisis sanitaria", "emergencia salud", "pandemia", "preparación sanitaria", "sistema salud colapso", "respuesta emergencia", "vigilancia epidemiológica"],
+          "description": "Preparación y respuesta ante crisis sanitarias"
+        }
+      }
+    },
+    "Educación": {
+      "description": "Sistema educativo escolar, superior y técnico-profesional",
+      "subcategories": {
+        "Educación Escolar": {
+          "keywords": ["educación", "educación básica", "media", "liceo", "colegio", "calidad educativa", "psu", "sistema educativo", "establecimientos educacionales", "violencia escolar", "enseñanza", "educación escolar", "enseñanza básica", "enseñanza media", "ptus", "paes", "educación chile", "mejorar educación", "propuestas educación", "políticas educación", "educación de calidad", "colegios municipales", "educación pública", "niños estudien bien"],
+          "description": "Educación básica y media, calidad y equidad"
+        },
+        "Educación Superior": {
+          "keywords": ["universidad", "gratuidad", "cae", "crédito", "educación superior", "arancel", "educación universitaria", "crédito universitario", "becas universitarias", "matrícula universidad"],
+          "description": "Educación superior, gratuidad y financiamiento"
+        },
+        "Educación Técnica": {
+          "keywords": ["técnico profesional", "cft", "instituto", "capacitación", "oficios", "educación técnica", "formación técnica", "instituto profesional", "carreras técnicas", "educación dual"],
+          "description": "Educación técnico-profesional y capacitación"
+        },
+        "Formación Ciudadana": {
+          "keywords": ["formación ciudadana", "educación cívica", "democracia", "participación", "valores", "educación ciudadana", "civismo", "participación ciudadana", "derechos humanos educación"],
+          "description": "Formación ciudadana y educación en valores"
+        },
+        "Infraestructura Educativa": {
+          "keywords": ["infraestructura educativa", "construcción colegios", "equipamiento escolar", "salas de clases", "bibliotecas escolares", "laboratorios", "educación infraestructura"],
+          "description": "Infraestructura y equipamiento educativo"
+        },
+        "Brecha Digital": {
+          "keywords": ["brecha digital", "conectividad escolar", "computadores", "internet escuelas", "tecnología educativa", "educación digital", "alfabetización digital"],
+          "description": "Acceso a tecnología e internet en educación"
+        }
+      }
+    },
+    "Trabajo": {
+      "description": "Empleo, salarios, jornada laboral y derechos del trabajador",
+      "subcategories": {
+        "Salario Mínimo": {
+          "keywords": ["salario mínimo", "sueldo mínimo", "ingreso mínimo", "remuneración básica", "trabajo digno", "empleo", "desempleo", "oportunidades", "trabajadores", "emprendedores", "trabajar", "generar empleos", "emprendimiento", "trabajar en paz", "oportunidad de trabajo", "mil personas desocupadas", "desocupados", "trabajo salario", "ingresos mínimos", "sueldo que alcance", "ganar más plata", "trabajos mal pagados", "explotación laboral", "sueldos miserables"],
+          "description": "Política de salario mínimo y generación de empleo"
+        },
+        "Jornada Laboral": {
+          "keywords": ["jornada laboral", "40 horas", "36 horas", "reducción jornada", "horario trabajo", "trabajo jornada", "horas de trabajo", "semana laboral", "tiempo de trabajo"],
+          "description": "Regulación de jornada laboral"
+        },
+        "Informalidad": {
+          "keywords": ["trabajo informal", "formalización", "microempresa", "trabajador independiente", "trabajo informalidad", "economía informal", "sector informal", "empleo informal"],
+          "description": "Reducción de informalidad laboral"
+        },
+        "Derechos Laborales": {
+          "keywords": ["sindicato", "negociación colectiva", "huelga", "fuero laboral", "despido", "trabajo derechos", "derechos trabajador", "sindicalización", "protección laboral"],
+          "description": "Derechos sindicales y laborales"
+        },
+        "Empleo Juvenil": {
+          "keywords": ["empleo joven", "trabajo juvenil", "primer empleo", "capacitación joven", "oportunidades jóvenes", "trabajo empleo juvenil", "subsidio empleo joven"],
+          "description": "Empleo y oportunidades laborales para jóvenes"
+        },
+        "Emprendimiento": {
+          "keywords": ["emprendimiento", "pyme", "microempresa", "startup", "innovación", "trabajo emprendimiento", "apoyo emprendedores", "fomento productivo"],
+          "description": "Apoyo al emprendimiento y pequeñas empresas"
+        }
+      }
+    },
+    "Economía": {
+      "description": "Crecimiento económico, inflación, costo de vida e inversión",
+      "subcategories": {
+        "Inflación": {
+          "keywords": ["inflación", "costo de vida", "precio", "canasta básica", "ipc", "emergencia económica", "crisis económica", "estancamiento", "desaceleración económica", "economía inflación", "precios altos", "carestía", "alza precios", "todo caro", "no alcanza plata", "sueldo no alcanza", "encarecimiento", "precios por las nubes"],
+          "description": "Control de inflación y costo de vida"
+        },
+        "Endeudamiento": {
+          "keywords": ["deuda", "sobreendeudamiento", "retail", "cae", "crédito", "dicom", "economía deuda", "deudas familiares", "tarjetas de crédito", "alivio deuda", "estoy en dicom", "no puedo pagar", "me persiguen cobranzas", "deudas hasta el cuello", "quiebra personal", "insolvencia"],
+          "description": "Endeudamiento familiar y alivio financiero"
+        },
+        "Crecimiento": {
+          "keywords": ["crecimiento", "pib", "productividad", "inversión", "desarrollo económico", "economía crecimiento", "reactivación económica", "desarrollo país", "crecimiento pib"],
+          "description": "Crecimiento económico e inversión"
+        },
+        "Impuestos": {
+          "keywords": ["impuesto", "tributación", "iva", "renta", "reforma tributaria", "economía impuestos", "sistema tributario", "carga tributaria", "evasión fiscal"],
+          "description": "Sistema tributario y política fiscal"
+        },
+        "Servicios Básicos": {
+          "keywords": ["electricidad", "tarifa eléctrica", "gas", "agua potable", "servicios básicos", "economía servicios básicos", "cuentas de luz", "tarifas"],
+          "description": "Tarifas y acceso a servicios básicos"
+        },
+        "Economía Digital": {
+          "keywords": ["economía digital", "comercio electrónico", "fintech", "billeteras digitales", "pagos digitales", "criptomonedas", "blockchain", "transformación digital empresas", "digitalización económica"],
+          "description": "Desarrollo de la economía digital y financiera"
+        },
+        "Crisis del Costo de Vida": {
+          "keywords": ["crisis costo vida", "poder adquisitivo", "encarecimiento vida", "pérdida poder compra", "inflación familiar", "presupuesto familiar", "gastos básicos", "supervivencia económica"],
+          "description": "Crisis del costo de la vida y poder adquisitivo familiar"
+        }
+      }
+    },
+    "Seguridad": {
+      "description": "Seguridad ciudadana, narcotráfico y crimen organizado",
+      "subcategories": {
+        "Seguridad Barrial": {
+          "keywords": ["seguridad barrial", "delincuencia", "robo", "asalto", "prevención delito", "emergencia en seguridad", "emergencia seguridad", "inseguridad", "criminales", "impunidad", "seguro", "país seguro", "tranquilidad", "orden público", "violencia", "delito", "seguridad ciudadana", "criminalidad", "portonazo", "encerrona", "balaceras", "tiroteos", "bandas delictuales", "combos", "lumpen", "flaites", "cogoteos", "lanzas"],
+          "description": "Seguridad barrial y prevención del delito"
+        },
+        "Narcotráfico": {
+          "keywords": ["narcotráfico", "droga", "tráfico", "crimen organizado", "lavado dinero", "seguridad narcotráfico", "drogas", "microtráfico", "carteles", "bandas criminales", "pasta base", "cocaína", "marihuana", "fentanilo", "puntos droga", "narcomenudeo", "guerra narcos", "ajustes cuentas"],
+          "description": "Combate al narcotráfico y crimen organizado"
+        },
+        "Carabineros": {
+          "keywords": ["carabineros", "policía", "reforma policial", "orden público", "investigaciones", "seguridad carabineros", "pdi", "fuerzas orden", "policía uniformada"],
+          "description": "Fortalecimiento y reforma de Carabineros"
+        },
+        "Control Fronterizo": {
+          "keywords": ["frontera", "migración", "control fronterizo", "aduana", "inmigración", "seguridad frontera", "fronteras", "migración irregular", "control migratorio"],
+          "description": "Control de fronteras y migración"
+        },
+        "Tren de Aragua": {
+          "keywords": ["tren de aragua", "bandas extranjeras", "crimen internacional", "venezolanos delincuentes", "seguridad tren aragua", "organizaciones criminales extranjeras"],
+          "description": "Combate a organizaciones criminales extranjeras"
+        },
+        "Control de Armas": {
+          "keywords": ["armas", "control armas", "armas ilegales", "porte ilegal", "seguridad armas", "registro armas", "tráfico armas"],
+          "description": "Control y regulación de armas de fuego"
+        },
+        "Estado de Excepción": {
+          "keywords": ["estado de excepción", "militarización", "fuerzas armadas", "militares", "seguridad estado excepción", "medidas excepcionales", "el salvador", "mano dura"],
+          "description": "Medidas excepcionales de seguridad"
+        },
+        "Trata de Personas": {
+          "keywords": ["trata de personas", "tráfico personas", "explotación sexual", "esclavitud moderna", "prostitución forzada", "trabajo forzado", "explotación laboral", "redes trata", "víctimas trata"],
+          "description": "Combate a la trata de personas y explotación humana"
+        },
+        "Crimen Internacional": {
+          "keywords": ["crimen internacional", "bandas extranjeras", "organizaciones transnacionales", "crimen transfronterizo", "cooperación policial internacional", "interpol", "extradición"],
+          "description": "Crimen organizado internacional y cooperación policial"
+        },
+        "Medidas Excepcionales": {
+          "keywords": ["medidas excepcionales seguridad", "toque de queda", "militares en calles", "operativos especiales", "fuerzas especiales", "control territorial", "mano dura seguridad"],
+          "description": "Implementación de medidas excepcionales de seguridad ciudadana"
+        }
+      }
+    },
+    "Vivienda": {
+      "description": "Acceso a vivienda, déficit habitacional y desarrollo urbano",
+      "subcategories": {
+        "Déficit Habitacional": {
+          "keywords": ["déficit habitacional", "vivienda social", "subsidio habitacional", "casa propia", "sueño de la casa propia", "vivienda", "habitacional", "vivienda déficit", "construcción viviendas", "acceso vivienda", "nunca tendré casa", "vivir hacinados", "allegados", "casa familia", "independizarse"],
+          "description": "Reducción del déficit habitacional"
+        },
+        "Campamentos": {
+          "keywords": ["campamento", "toma", "allegamiento", "vivienda precaria", "erradicación", "vivienda campamentos", "tomas de terreno", "asentamientos informales", "familias campamentos"],
+          "description": "Erradicación de campamentos"
+        },
+        "Arriendos": {
+          "keywords": ["arriendo", "alquiler", "mercado inmobiliario", "garantía estatal", "ley arriendo", "vivienda arriendo", "subsidio arriendo", "mercado arriendos", "canon arriendo", "arriendos carísimos", "no puedo pagar arriendo", "dueños abusivos", "suben arriendo", "garantias imposibles"],
+          "description": "Regulación del mercado de arriendos"
+        },
+        "Transporte Público": {
+          "keywords": ["metro", "micro", "transantiago", "red", "locomoción", "transporte público", "vivienda transporte", "conectividad", "buses", "metro santiago", "micros llenas", "metro colapsado", "transporte caro", "tarifa bip", "evasorín", "combis", "colectivos"],
+          "description": "Mejoramiento del transporte público"
+        },
+        "Planificación Urbana": {
+          "keywords": ["planificación urbana", "ciudad", "urbanización", "desarrollo urbano", "ordenamiento", "vivienda planificación", "ciudades", "áreas verdes", "espacios públicos"],
+          "description": "Planificación y desarrollo urbano"
+        },
+        "Vivienda de Emergencia": {
+          "keywords": ["vivienda emergencia", "alojamiento temporal", "refugios", "catástrofes vivienda", "soluciones habitacionales urgentes", "casas emergencia", "albergues"],
+          "description": "Soluciones habitacionales de emergencia y temporales"
+        },
+        "Gentrificación": {
+          "keywords": ["gentrificación", "desplazamiento urbano", "expulsión barrios", "aburguesamiento", "cambio uso suelo", "desarrollo inmobiliario exclusivo", "pérdida identidad barrial"],
+          "description": "Control de procesos de gentrificación y desplazamiento urbano"
+        }
+      }
+    },
+    "Medioambiente": {
+      "description": "Protección ambiental, crisis hídrica y energías renovables",
+      "subcategories": {
+        "Crisis Hídrica": {
+          "keywords": ["agua", "sequía", "escasez", "recursos hídricos", "gestión agua", "medioambiente agua", "crisis hídrica", "derechos agua", "agua potable", "riego", "se acabó el agua", "no hay agua", "estamos en sequía", "falta agua", "cortes agua", "racionamiento agua"],
+          "description": "Gestión de recursos hídricos y crisis del agua"
+        },
+        "Energías Renovables": {
+          "keywords": ["energía renovable", "solar", "eólica", "limpia", "sustentable", "verde", "medioambiente energía", "paneles solares", "energía limpia", "transición energética"],
+          "description": "Transición a energías renovables"
+        },
+        "Litio": {
+          "keywords": ["litio", "hidrógeno verde", "minería", "salar", "electromovilidad", "medioambiente litio", "minería verde", "salares", "extracción litio"],
+          "description": "Explotación sustentable del litio"
+        },
+        "Contaminación": {
+          "keywords": ["contaminación", "zona de sacrificio", "quintero", "temuco", "aire", "smog", "medioambiente contaminación", "polución", "calidad aire", "contaminación atmosférica"],
+          "description": "Control de la contaminación ambiental"
+        },
+        "Crisis Energética": {
+          "keywords": ["apagón", "crisis energética", "sistema eléctrico", "cortes luz", "falla eléctrica", "medioambiente energía eléctrica", "electricidad", "suministro eléctrico"],
+          "description": "Estabilidad del sistema eléctrico nacional"
+        },
+        "Cambio Climático": {
+          "keywords": ["cambio climático", "calentamiento global", "emisiones", "carbono neutral", "medioambiente clima", "gases efecto invernadero", "sustentabilidad"],
+          "description": "Adaptación y mitigación del cambio climático"
+        },
+        "Incendios Forestales": {
+          "keywords": ["incendios forestales", "incendios", "conaf", "prevención incendios", "medioambiente incendios", "bosques", "emergencias forestales"],
+          "description": "Prevención y combate de incendios forestales"
+        }
+      }
+    },
+    "Regiones": {
+      "description": "Descentralización, desarrollo regional y equidad territorial",
+      "subcategories": {
+        "Descentralización": {
+          "keywords": ["descentralización", "gobierno regional", "municipio", "transferencia competencias", "regiones", "regional", "gobiernos regionales", "municipios", "desarrollo regional", "territorio", "territorial", "regiones descentralización", "autonomía regional"],
+          "description": "Fortalecimiento de gobiernos regionales"
+        },
+        "Regiones Extremas": {
+          "keywords": ["región extrema", "norte", "sur", "aislamiento", "conectividad", "desarrollo regional", "regiones extremas", "tarapacá", "antofagasta", "magallanes", "aysén", "regiones norte", "regiones sur"],
+          "description": "Desarrollo de regiones extremas"
+        },
+        "Zonas Rurales": {
+          "keywords": ["rural", "campo", "agricultura", "aislado", "conectividad rural", "regiones rural", "mundo rural", "pueblos", "localidades rurales", "agricultura familiar"],
+          "description": "Desarrollo rural y zonas aisladas"
+        },
+        "Equidad Territorial": {
+          "keywords": ["equidad territorial", "convergencia", "desarrollo equilibrado", "recursos regionales", "regiones equidad", "igualdad territorial", "disparidades regionales"],
+          "description": "Equidad y desarrollo territorial"
+        },
+        "Araucanía": {
+          "keywords": ["araucanía", "conflicto mapuche", "territorio mapuche", "regiones araucanía", "pueblo mapuche", "tierras mapuche", "violencia araucanía"],
+          "description": "Desarrollo y conflicto en La Araucanía"
+        }
+      }
+    },
+    "Institucionalidad": {
+      "description": "Constitución, probidad, transparencia y participación ciudadana",
+      "subcategories": {
+        "Constitución": {
+          "keywords": ["constitución", "nueva constitución", "reforma constitucional", "proceso constituyente", "institucionalidad constitución", "carta magna", "carta fundamental"],
+          "description": "Nueva Constitución o reformas constitucionales"
+        },
+        "Probidad": {
+          "keywords": ["probidad", "transparencia", "corrupción", "ética pública", "accountability", "crisis de estado", "estado ineficaz", "burocracia", "gasto público", "aparato del estado", "crisis del estado", "mediocridad", "improvisación", "ideología", "falta de rumbo", "crisis", "decadencia", "estancamiento", "institucionalidad probidad"],
+          "description": "Probidad y transparencia en el Estado"
+        },
+        "Financiamiento Político": {
+          "keywords": ["financiamiento político", "campaña", "gastos electorales", "lobby", "conflicto interés", "institucionalidad financiamiento", "aportes campaña", "transparencia política"],
+          "description": "Financiamiento de la política y lobby"
+        },
+        "Participación Ciudadana": {
+          "keywords": ["participación ciudadana", "consulta", "plebiscito", "sociedad civil", "democracia", "institucionalidad participación", "iniciativa popular", "democracia participativa"],
+          "description": "Fortalecimiento de la participación ciudadana"
+        },
+        "Desigualdad": {
+          "keywords": ["desigualdad", "inequidad", "distribución", "justicia social", "brecha", "emergencia social", "pobreza", "crisis social", "exclusion", "marginalidad", "institucionalidad desigualdad", "redistribución", "ricos más ricos", "pobres más pobres", "injusticia social", "no hay igualdad", "abismo social", "privilegios"],
+          "description": "Reducción de la desigualdad social"
+        },
+        "Reforma Electoral": {
+          "keywords": ["reforma electoral", "sistema electoral", "parlamentarios", "congreso", "institucionalidad electoral", "binominal", "proporcional", "representación política"],
+          "description": "Reforma del sistema electoral y parlamentario"
+        },
+        "Confianza Institucional": {
+          "keywords": ["confianza institucional", "legitimidad", "credibilidad", "desafección política", "institucionalidad confianza", "crisis institucional", "desprestigio político"],
+          "description": "Recuperación de confianza en las instituciones"
+        }
+      }
+    },
+    "Migración": {
+      "description": "Migración, integración y control migratorio",
+      "subcategories": {
+        "Control Migratorio": {
+          "keywords": ["migración ilegal", "control migratorio", "visa", "expulsión", "migración control", "inmigración irregular", "deportación", "regularización migratoria", "frontera migración", "migrantes ilegales", "extranjeros irregulares", "pasos clandestinos", "coyotes", "traficantes migrantes", "ingreso ilegal"],
+          "description": "Control de fronteras y migración irregular"
+        },
+        "Integración Social": {
+          "keywords": ["inmigrante", "integración", "regularización", "inclusión", "migración integración", "inclusión migrantes", "migrantes trabajo", "documentos migrantes", "servicios migrantes", "discriminación extranjeros", "xenofobia", "racismo migrantes", "migrantes honestos", "trabajadores extranjeros"],
+          "description": "Integración social de migrantes"
+        },
+        "Trata y Tráfico de Personas": {
+          "keywords": ["trata de personas", "tráfico migrantes", "explotación", "migración trata", "tráfico humano", "esclavitud moderna", "explotación laboral migrantes"],
+          "description": "Combate a la trata y tráfico de personas"
+        },
+        "Derechos Migrantes": {
+          "keywords": ["derechos migrantes", "refugiado", "protección internacional", "migración derechos", "asilo", "protección refugiados", "no discriminación migrantes"],
+          "description": "Protección de derechos de migrantes y refugiados"
+        }
+      }
+    },
+    "Memoria Histórica": {
+      "description": "Memoria histórica, derechos humanos y reparación",
+      "subcategories": {
+        "Derechos Humanos": {
+          "keywords": ["derechos humanos", "violaciones derechos humanos", "dictadura", "reparación", "memoria derechos humanos", "justicia transicional", "verdad y reconciliación"],
+          "description": "Violaciones a derechos humanos y reparación"
+        },
+        "Colonia Dignidad": {
+          "keywords": ["colonia dignidad", "memorial", "expropiación", "memoria colonia dignidad", "villa baviera", "justicia colonia dignidad", "reparación colonia dignidad"],
+          "description": "Justicia y memoria sobre Colonia Dignidad"
+        },
+        "Museos y Memoriales": {
+          "keywords": ["museo memoria", "memorial", "sitios memoria", "memoria histórica museos", "patrimonio memoria", "lugares memoria", "educación memoria"],
+          "description": "Preservación de sitios y museos de memoria"
+        },
+        "Educación en Memoria": {
+          "keywords": ["educación sobre dictadura chilena", "enseñanza memoria histórica pinochet", "educación derechos humanos dictadura", "pedagogía sobre golpe estado 1973", "formación memoria histórica chile", "educación historia reciente dictadura", "enseñanza sobre violaciones ddhh", "educación sobre represión", "enseñanza golpe militar"],
+          "description": "Educación en memoria histórica y derechos humanos"
+        }
+      }
+    },
+    "Ciencia e Innovación": {
+      "description": "Ciencia, tecnología, innovación y derechos sociales",
+      "subcategories": {
+        "Ciencia y Tecnología": {
+          "keywords": ["ciencia", "tecnología", "investigación", "i+d", "innovación", "ciencia tecnología", "desarrollo científico", "investigación científica", "fondecyt", "conicyt"],
+          "description": "Desarrollo científico y tecnológico nacional"
+        },
+        "Digitalización": {
+          "keywords": ["digitalización", "transformación digital", "gobierno digital", "ciencia digitalización", "tecnologías digitales", "inteligencia artificial", "datos"],
+          "description": "Digitalización del Estado y sociedad"
+        },
+        "Observatorio Espacial": {
+          "keywords": ["observatorio espacial", "china observatorio", "astronomía", "ciencia observatorio", "telescopios", "investigación espacial", "soberanía científica"],
+          "description": "Observatorios astronómicos y soberanía científica"
+        },
+        "Igualdad de Género": {
+          "keywords": ["igualdad género", "brecha salarial", "paridad", "género", "mujeres", "feminismo", "violencia género", "discriminación mujer", "derechos mujer"],
+          "description": "Igualdad de género y derechos de las mujeres"
+        },
+        "Discapacidad": {
+          "keywords": ["discapacidad", "inclusión", "accesibilidad", "personas discapacidad", "barreras arquitectónicas", "integración discapacidad", "derechos discapacidad"],
+          "description": "Derechos e inclusión de personas con discapacidad"
+        },
+        "Cuidados": {
+          "keywords": ["cuidado", "cuidadores", "dependencia", "subsidio cuidador", "sistema cuidados", "cuidado adulto mayor", "conciliación familiar"],
+          "description": "Sistema nacional de cuidados y dependencia"
+        },
+        "Eutanasia": {
+          "keywords": ["eutanasia", "muerte digna", "derecho morir", "cuidados paliativos", "terminalidad", "voluntad anticipada", "decisión médica"],
+          "description": "Debate sobre eutanasia y muerte digna"
+        }
+      }
+    },
+    "Tecnología e Innovación": {
+      "description": "Tecnología, automatización, inteligencia artificial y transformación digital",
+      "subcategories": {
+        "Automatización": {
+          "keywords": ["automatización", "robots", "automatización empleos", "inteligencia artificial trabajo", "robotización", "empleos automatización", "tecnología reemplaza trabajadores", "futuro trabajo"],
+          "description": "Impacto de la automatización en el empleo"
+        },
+        "Inteligencia Artificial": {
+          "keywords": ["inteligencia artificial", "ia", "machine learning", "algoritmos", "ia gobierno", "tecnología ia", "decisiones algorítmicas", "sesgos algoritmos"],
+          "description": "Regulación y uso de inteligencia artificial"
+        },
+        "Conectividad Digital": {
+          "keywords": ["internet", "fibra óptica", "conectividad", "brecha digital", "internet rural", "5g", "infraestructura digital", "acceso internet"],
+          "description": "Acceso universal a internet y conectividad"
+        },
+        "Ciberseguridad": {
+          "keywords": ["ciberseguridad", "seguridad digital", "hackers", "ataques informáticos", "protección datos", "privacidad digital", "delitos informáticos"],
+          "description": "Seguridad en el espacio digital"
+        },
+        "Innovación Tecnológica": {
+          "keywords": ["innovación tecnológica", "startups tech", "emprendimiento tecnológico", "desarrollo tecnológico", "hub tecnológico", "ecosistema innovación"],
+          "description": "Fomento de la innovación y emprendimiento tecnológico"
+        }
+      }
+    }
+  },
+  "metadata": {
+    "total_categories": 14,
+    "total_subcategories": 83,
+    "confidence_threshold": 0.25,
+    "fallback_category": "Institucionalidad",
+    "pdr_alignment": "expanded_for_343_citizen_questions",
+    "last_optimization": "2025-01-09_taxonomy_expansion",
+    "coverage_improvement": "~75% to ~92% citizen question coverage",
+    "new_keywords_added": "~85 keywords from citizen language patterns"
+  }
+}
