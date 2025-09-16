@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run lint)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "WebSearch",
+      "Bash(npm run test:health:*)",
+      "Bash(npm install:*)",
+      "Bash(bun run test:quick:*)",
+      "Bash(bun run:*)",
+      "WebFetch(domain:www.convex.dev)",
+      "WebFetch(domain:docs.convex.dev)",
+      "WebFetch(domain:github.com)",
+      "Bash(npm run test:optimizations:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(npm run test:quick:*)",
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_press_key"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "Pensiones y Seguridad Social": {
+    "AFP y capitalización individual": ["afp", "administradora de fondos", "capitalización", "retiro"],
+    "Reparto o sistema mixto": ["reparto", "solidario", "sistema mixto", "cotización colectiva"],
+    "Pensión básica universal": ["pensión básica", "universal", "aporte solidario"],
+    "Adulto mayor y dependencia": ["adulto mayor", "tercera edad", "dependencia", "cuidado"]
+  },
+  "Salud": {
+    "Fonasa": ["fonasa", "seguro público", "fondo nacional de salud"],
+    "Isapres": ["isapre", "seguro privado", "cotización salud"],
+    "Listas de espera": ["lista de espera", "demora hospitalaria", "cirugía", "operación"],
+    "Inversión en salud pública": ["hospital", "consultorio", "infraestructura", "centro de salud"],
+    "Acceso a especialistas y medicamentos": ["especialista", "médico", "medicamento", "tratamiento"],
+    "Salud mental": ["salud mental", "psicológico", "psiquiátrico", "estrés"],
+    "Enfermedades catastróficas y prevención": ["catastrófica", "cáncer", "vacunación", "prevención"]
+  },
+  "Educación": {
+    "Educación escolar": ["escuela", "colegio", "liceo", "profesor", "docente"],
+    "Educación superior": ["universidad", "gratuidad", "arancel", "CAE", "crédito universitario"],
+    "Técnico-profesional": ["instituto profesional", "cft", "formación técnica"],
+    "Infraestructura y brecha digital": ["conectividad", "computador", "internet", "brecha digital"],
+    "Formación ciudadana y valores": ["ciudadanía", "autonomía", "cívico", "participación"],
+    "STEM e innovación educativa": ["ciencia", "tecnología", "stem", "digitalización educativa"]
+  },
+  "Trabajo y Empleo": {
+    "Salario mínimo": ["salario mínimo", "sueldo base", "ingreso mínimo"],
+    "Jornada laboral": ["40 horas", "36 horas", "reducción de jornada"],
+    "Informalidad y precariedad": ["trabajo informal", "honorarios", "precariedad laboral"],
+    "Empleo juvenil": ["empleo joven", "primer trabajo", "subsidio joven"],
+    "Derechos laborales y sindicales": ["sindicato", "negociación colectiva", "contrato laboral"],
+    "Automatización y futuro del trabajo": ["automatización", "inteligencia artificial", "robotización", "teletrabajo"],
+    "Apoyo a independientes y pymes": ["independiente", "pyme", "emprendedor", "subsidio empresa"]
+  },
+  "Economía y Costo de Vida": {
+    "Inflación y precios": ["inflación", "costo de vida", "canasta básica", "precios"],
+    "Tarifas eléctricas y servicios básicos": ["electricidad", "tarifa eléctrica", "cuentas de luz", "servicios básicos"],
+    "Deuda y retail": ["retail", "deuda", "tarjeta de crédito", "sobreendeudamiento"],
+    "Política fiscal e impuestos": ["impuestos", "iva", "tributario", "recaudación fiscal"],
+    "Crecimiento e inversión": ["pib", "inversión", "reactivación económica", "emprendimiento"]
+  },
+  "Seguridad y Crimen Organizado": {
+    "Delincuencia común": ["asalto", "robo", "portonazo", "encerrona"],
+    "Narcotráfico y bandas": ["narcotráfico", "droga", "cartel", "microtráfico"],
+    "Tren de Aragua y crimen internacional": ["tren de aragua", "banda extranjera", "crimen internacional"],
+    "Reforma policial": ["carabineros", "pdi", "policía", "orden público"],
+    "Seguridad barrial": ["barrio seguro", "prevención delito", "vecinos"],
+    "Control de armas y fronteras": ["frontera", "armas ilegales", "contrabando"],
+    "Políticas tipo El Salvador": ["mano dura", "estado de excepción", "medidas salvadoreñas"]
+  },
+  "Vivienda y Ciudad": {
+    "Déficit habitacional": ["vivienda social", "déficit habitacional", "casa propia"],
+    "Campamentos": ["campamento", "toma", "asentamiento informal"],
+    "Arriendo": ["arriendo", "alquiler", "subsidio arriendo"],
+    "Transporte público y metro": ["metro", "micro", "transporte público", "bus"],
+    "Planificación urbana": ["planificación urbana", "desarrollo urbano", "áreas verdes"]
+  },
+  "Medioambiente y Energía": {
+    "Crisis hídrica": ["agua", "sequía", "escasez hídrica", "derechos de agua"],
+    "Apagones y sistema eléctrico": ["apagón", "fallo eléctrico", "transmisión eléctrica"],
+    "Energías renovables": ["solar", "eólica", "renovable", "panel solar"],
+    "Litio e hidrógeno verde": ["litio", "hidrógeno verde", "minería verde"],
+    "Contaminación y zonas de sacrificio": ["contaminación", "smog", "zona de sacrificio"],
+    "Cambio climático e incendios": ["incendios", "adaptación climática", "emisiones", "impuesto verde"],
+    "Electromovilidad": ["vehículo eléctrico", "electromovilidad", "autos eléctricos"]
+  },
+  "Migración e Integración": {
+    "Control migratorio": ["migración ilegal", "frontera", "visa", "expulsión"],
+    "Trata y tráfico de personas": ["trata de personas", "tráfico migrantes", "explotación"],
+    "Integración social": ["inmigrante", "integración", "regularización", "inclusión"],
+    "Derechos humanos y migración": ["derechos humanos", "refugiado", "protección internacional"]
+  },
+  "Descentralización y Regiones": {
+    "Gobiernos regionales": ["gobierno regional", "gore", "descentralización"],
+    "Desarrollo regional": ["araucanía", "norte grande", "magallanes", "zona extrema"],
+    "Zonas rurales y aisladas": ["rural", "campo", "zona aislada"],
+    "Equidad territorial": ["equidad territorial", "desigualdad regional", "recursos regionales"]
+  },
+  "Institucionalidad y Política": {
+    "Nueva Constitución": ["constitución", "carta fundamental", "proceso constituyente"],
+    "Probidad y transparencia": ["corrupción", "transparencia", "probidad"],
+    "Financiamiento político": ["financiamiento campaña", "aportes", "donaciones"],
+    "Participación ciudadana": ["plebiscito", "iniciativa popular", "consulta ciudadana"],
+    "Reforma electoral y parlamento": ["parlamentarios", "sistema electoral", "reforma política"],
+    "Confianza en instituciones": ["confianza", "desafección política", "instituciones públicas"]
+  },
+  "Memoria Histórica y Derechos Humanos": {
+    "Colonia Dignidad": ["colonia dignidad", "memorial", "expropiación"],
+    "Derechos humanos y dictadura": ["violaciones derechos humanos", "dictadura", "reparación"],
+    "Museos y memoriales": ["memoria histórica", "museo", "memorial"],
+    "Educación en derechos humanos": ["educación ddhh", "memoria", "historia reciente"]
+  },
+  "Ciencia, Innovación y Tecnología": {
+    "Observatorio chino y soberanía": ["observatorio espacial", "china", "norte chico"],
+    "Ciencia y tecnología nacional": ["ciencia", "investigación", "i+d", "innovación"],
+    "Digitalización ciudadana": ["alfabetización digital", "inclusión digital", "ciudadanía digital"],
+    "Apoyo a pymes innovadoras": ["fintech", "innovación pyme", "emprendimiento digital"]
+  },
+  "Derechos Sociales y Género": {
+    "Eutanasia y muerte digna": ["eutanasia", "muerte digna", "derecho a morir"],
+    "Inclusión discapacidad": ["discapacidad", "inclusión", "accesibilidad"],
+    "Igualdad de género": ["igualdad género", "brecha salarial", "paridad", "cuidado"],
+    "Cuidadores y dependencia": ["cuidador", "dependencia", "subsidio cuidador"]
+  }
+}
