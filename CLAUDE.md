@@ -18,6 +18,8 @@ Fully functional application with complete vector search implementation, query c
 
 ## IMPORTANT
 
+    - Follow software development best practices.
+    - Use design patterns, SOLID principles and clean design principles.
     - Never add sensitive or private information in comments or code.
     - Always review and sanitize input data to prevent code injection.
     - Maintain consistency in coding style and follow best practices.

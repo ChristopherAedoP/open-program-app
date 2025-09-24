@@ -343,9 +343,35 @@ function expandQueryWithTaxonomyKeywords(query: string, classification: Classifi
       // Sort by relevance (prefer shorter, more specific terms)
       .sort((a, b) => a.length - b.length);
 
-    // Dynamic expansion limit based on confidence and query length
-    const maxExpansion = Math.max(2, Math.min(5, Math.floor(classification.confidence * 6)));
-    const expansionKeywords = relevantKeywords.slice(0, maxExpansion);
+    // MEJORA: Dynamic expansion limit mejorado con tags awareness
+    const maxExpansion = Math.max(2, Math.min(6, Math.floor(classification.confidence * 7))); // Aumentado de 5 a 6 keywords max
+    let expansionKeywords = relevantKeywords.slice(0, maxExpansion);
+
+    // NUEVA: Priorizar keywords que están en suggested_tags (más relevantes)
+    if (classification.suggested_tags?.length > 0) {
+      const tagPrioritizedKeywords = relevantKeywords.filter(kw =>
+        classification.suggested_tags.some(tag =>
+          tag.toLowerCase().includes(kw.toLowerCase()) || kw.toLowerCase().includes(tag.toLowerCase())
+        )
+      );
+
+      if (tagPrioritizedKeywords.length > 0) {
+        // Usar keywords priorizados por tags + algunos aleatorios para diversidad
+        const priorityCount = Math.min(tagPrioritizedKeywords.length, Math.ceil(maxExpansion * 0.7));
+        const randomCount = maxExpansion - priorityCount;
+
+        expansionKeywords = [
+          ...tagPrioritizedKeywords.slice(0, priorityCount),
+          ...relevantKeywords.filter(kw => !tagPrioritizedKeywords.includes(kw)).slice(0, randomCount)
+        ];
+
+        console.log('🎯 Expansión priorizada por tags:', {
+          priority_keywords: priorityCount,
+          random_keywords: randomCount,
+          suggested_tags: classification.suggested_tags.slice(0, 3)
+        });
+      }
+    }
 
     // Additional context keywords based on confidence
     if (classification.confidence > 0.7 && category) {
