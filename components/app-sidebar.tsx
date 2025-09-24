@@ -129,7 +129,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 						</div>
 					</div>
 					<div className="mt-4 text-center">
-						<Badge variant="outline">v.1.0</Badge>
+						<Badge variant="outline">v.1.5</Badge>
 					</div>
 				</div>
 			</SidebarFooter>
