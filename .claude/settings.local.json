@@ -18,7 +18,8 @@
       "Bash(npm run test:quick:*)",
       "mcp__playwright__browser_navigate",
       "mcp__playwright__browser_type",
-      "mcp__playwright__browser_press_key"
+      "mcp__playwright__browser_press_key",
+      "Bash(npm run:*)"
     ],
     "deny": [],
     "ask": []

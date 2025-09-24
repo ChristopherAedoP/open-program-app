@@ -116,17 +116,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 						</div>
 						<div className="flex-1">
 							<p className="text-xs font-semibold text-foreground mb-1">
-								Nota sobre las Fuentes
+								Notas
 							</p>
 							<p className="text-xs text-muted-foreground leading-relaxed">
-								Los programas de E. Artés y M. Enríquez-Ominami no se
-								encontraron en sus sitios oficiales. El de J. Kaiser fue
-								obtenido desde EMOL.
+								- Ahora con todos los programas oficiales de{' '}
+								<strong>Servel.cl</strong>.
+							</p>
+							<p className="text-xs text-muted-foreground leading-relaxed">
+								- Se ha mejorado la clasificación y estructura de los datos para
+								respuestas con mayor precisión y contexto.
 							</p>
 						</div>
 					</div>
 					<div className="mt-4 text-center">
-						<Badge variant="outline">v.0.1 - Beta</Badge>
+						<Badge variant="outline">v.1.0</Badge>
 					</div>
 				</div>
 			</SidebarFooter>

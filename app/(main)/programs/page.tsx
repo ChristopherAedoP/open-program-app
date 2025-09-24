@@ -9,35 +9,42 @@ const candidates = [
 	{
 		name: 'Harold Mayne-Nicholls',
 		programUrl:
-			'https://www.haroldpresidente.cl/wp-content/uploads/2025/08/LINEAMIENTOS-PROGRAMA-DE-GOBIERNO-2026-2030-HAROLD-MAYNE-NICHOLLS-1.pdf',
+			'https://www.servel.cl/wp-content/uploads/2025/09/HAROLD-MAYNE-NICHOLLS-SECUL.pdf',
 	},
-	{ name: 'Marco Enríquez-Ominami', programUrl: '#' },
+	{
+		name: 'Marco Enríquez-Ominami',
+		programUrl:
+			'https://www.servel.cl/wp-content/uploads/2025/09/MARCO-ANTONIO-ENRIQUEZ-OMINAMI-GUMUCIO.pdf',
+	},
 	{
 		name: 'Jeannette Jara',
 		programUrl:
-			'https://drive.google.com/file/d/1Ct-AEMifxrh2xcSTBNKSiP16oyR3npEj/view',
+			'https://www.servel.cl/wp-content/uploads/2025/09/JEANNETTE-JARA-ROMAN.pdf',
 	},
 	{
 		name: 'Johannes Kaiser',
 		programUrl:
-			'https://static.emol.cl/emol50/documentos/archivos/2025/08/22/file_20250822192805.pdf',
+			'https://www.servel.cl/wp-content/uploads/2025/09/JOHANNES-KAISER-BARENTS-VON-HOHENHAGEN.pdf',
 	},
 	{
 		name: 'José Antonio Kast',
 		programUrl:
-			'https://kast.cl/wp-content/uploads/2025/08/Programa_Jose_Antonio_Kast_R.pdf',
+			'https://www.servel.cl/wp-content/uploads/2025/09/JOSE-ANTONIO-KAST-RIST.pdf',
 	},
 	{
 		name: 'Evelyn Matthei',
 		programUrl:
-			'https://evelynmatthei.cl/wp-content/uploads/2025/08/Bases-programaticas-Evelyn-Matthei-2026.pdf',
+			'https://www.servel.cl/wp-content/uploads/2025/09/EVELYN-MATTHEI-FORNET.pdf',
 	},
-	{ name: 'Eduardo Artés', programUrl: '#' },
-
+	{
+		name: 'Eduardo Artés',
+		programUrl:
+			'https://www.servel.cl/wp-content/uploads/2025/09/EDUARDO-ANTONIO-ARTES-BRICHETTI.pdf',
+	},
 	{
 		name: 'Franco Parisi',
 		programUrl:
-			'https://storage.googleapis.com/parisipresidente/programa%20de%20gobierno/programa-de-gobierno-parisi-presidente-2026.pdf',
+			'https://www.servel.cl/wp-content/uploads/2025/09/FRANCO-PARISI-FERNANDEZ.pdf',
 	},
 ];
 
@@ -55,7 +62,8 @@ const ProgramsPage = () => {
 						<p className="mt-6 text-lg leading-8 text-muted-foreground">
 							Piensa en nuestra IA como tu propio equipo de analistas políticos,
 							trabajando exclusivamente para ti. Su única misión es estudiar a
-							fondo los programas presidenciales oficiales, sin acceso a
+							fondo los programas presidenciales oficiales obtenidos directamente del{' '}
+							<strong className="text-foreground">SERVEL</strong>, sin acceso a
 							noticias, redes sociales ni opiniones externas.
 						</p>
 						<p className="mt-4 text-lg leading-8 text-muted-foreground">
@@ -65,27 +73,38 @@ const ProgramsPage = () => {
 							estructurado, capaz de comparar propuestas. Pero lo más
 							importante: cada dato y conclusión se basa{' '}
 							<strong className="text-foreground">estrictamente</strong> en los
-							documentos oficiales, citando siempre la página exacta.
+							documentos oficiales del organismo regulador electoral, citando siempre la página exacta.
 						</p>
 					</div>
 
 					<div className="mt-20">
 						<div className="text-center">
 							<h3 className="text-2xl font-semibold leading-8 text-foreground">
-								Programas de Gobierno Analizados
+								Programas Presidenciales Oficiales SERVEL
 							</h3>
 							<p className="mt-2 text-md text-muted-foreground">
-								Estas son las fuentes públicas y oficiales que alimentan a
-								nuestra IA.
+								Fuente única y oficial: <strong>SERVEL</strong> (Servicio Electoral de Chile),
+								el organismo regulador de las elecciones presidenciales.
+							</p>
+							<p className="mt-2 text-sm text-muted-foreground">
+								Documentos obtenidos desde{' '}
+								<Link
+									href="https://www.servel.cl/candidaturas-y-programas-elecciones-presidencial-y-parlamentarias-2025/"
+									target="_blank"
+									rel="noopener noreferrer"
+									className="text-primary hover:underline font-semibold"
+								>
+									servel.cl/candidaturas-y-programas
+								</Link>
 							</p>
 						</div>
 						<div className="mt-6 text-sm text-muted-foreground bg-accent/50 p-4 rounded-lg max-w-2xl mx-auto flex items-start space-x-3">
 							<Info className="h-4 w-4 mt-0.5 flex-shrink-0" />
 							<p className="text-left">
 								<strong>¿Cómo los analiza?</strong> Imagina que nuestra IA es un
-								analista experto que, para cada pregunta, va a su biblioteca,
-								lee las páginas relevantes de estos libros y solo entonces te
-								responde.
+								analista experto que, para cada pregunta, va a su biblioteca oficial del SERVEL,
+								lee las páginas relevantes de estos documentos oficiales y solo entonces te
+								responde con base en la fuente única de verdad electoral.
 								<Link
 									href="/about"
 									className="text-primary hover:underline font-semibold ml-1"
